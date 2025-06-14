@@ -10,14 +10,16 @@ I’m <strong style="color:#1E90FF;">Rupesh Kumar</strong>, widely recognized in
 
 I specialize in offensive security, vulnerability research, and technical defense strategies across cloud, containerized, and enterprise environments.
 
+---
+
 ### 🏅 Recognitions
 
 My work has been acknowledged by:
 
-- 🛡️ <span style="color:#800000;"><strong>Indian Army</strong></span> (Hall of Fame)  
-- 🛡️ <span style="color:#5D8AA8;"><strong>Indian Airforce</strong></span> (sent <strong>2 detailed vulnerability reports</strong>)  
-- 🏛️ <strong><span style="color:#B22234;">U.S.</span> <span style="color:#FFFFFF;">Department</span> <span style="color:#3C3B6E;">of Energy</span></strong> (Hall of Fame)  
-- 🏛️ <strong><span style="color:#0055A4;">CERT</span> <span style="color:#EF4135;">France</span></strong>
+- 🛡️ <span style="color:#A52A2A;"><strong>Indian Army</strong></span> (Hall of Fame)  
+- 🛡️ <span style="color:#6495ED;"><strong>Indian Airforce</strong></span> (sent <strong>2 detailed vulnerability reports</strong>)  
+- 🏛️ <strong><span style="color:#DC143C;">U.S.</span> <span style="color:#F0F8FF;">Department</span> <span style="color:#4169E1;">of Energy</span></strong> (Hall of Fame)  
+- 🏛️ <strong><span style="color:#007BFF;">CERT</span> <span style="color:#FF4C4C;">France</span></strong>
 
 ---
 
@@ -55,7 +57,7 @@ I don’t just run scanners — I understand what, why, and how to break and def
 
 - 📜 Microsoft Certified: <strong style="color:#87CEEB;">Azure Fundamentals (AZ-900)</strong>  
 - 📜 Microsoft Certified: <strong style="color:#87CEEB;">Security, Compliance & Identity Fundamentals (SC-900)</strong>  
-- 🛡️ <strong><span style="color:#00247D;">Member</span>: <span style="color:#FFD700;">Australian Information Security Association (AISA)</span></strong>
+- 🛡️ <strong><span style="color:#4682B4;">Member</span>: <span style="color:#FFD700;">Australian Information Security Association (AISA)</span></strong>
 
 ---
 
