@@ -7,68 +7,63 @@ order: 4
 <!-- > Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
 {: .prompt-tip } -->
 
-## 👨‍💻 About Me
+# 👨‍💻 <span style="color:#00BFFF;">Null Spec7or — Rupesh Kumar</span>
 
-Hi, I’m **Rupesh Kumar**, better known online as **Null Spec7or** — a cybersecurity and digital forensics professional, currently working as a **Junior IT Security Engineer at Toucan Payments** in Hyderabad, India.
+I’m <strong style="color:#1E90FF;">Rupesh Kumar</strong>, widely recognized in the cybersecurity world as <strong style="color:#FF6347;">Null Spec7or</strong> — currently serving as a <span style="color:#00FA9A;"><strong>Junior IT Security Engineer</strong></span> at <strong>Toucan Payments</strong>, based in <strong>Hyderabad, India</strong>.
 
-I specialize in identifying, reporting, and mitigating high-impact vulnerabilities in cloud infrastructure, web applications, and enterprise systems. I’ve earned recognition from top institutions including:
+I specialize in offensive security, vulnerability research, and technical defense strategies across cloud, containerized, and enterprise environments. My work has been acknowledged by:
 
-- 🇮🇳 Indian Army (Hall of Fame)  
-- 🇮🇳 Indian Airforce (Hall of Fame)
-- 🇫🇷 CERT France  
-- 🇺🇸 U.S. Department of Energy (Hall of Fame)
-
----
-
-## 🔐 Core Expertise
-
-- ✅ Web Application & API Penetration Testing  
-- ✅ Red Teaming & Adversary Simulation  
-- ✅ Cloud Pentesting (AWS, GCP, Azure)  
-- ✅ Docker, Kubernetes & Container Security  
-- ✅ Active Directory & Network Security Auditing  
-- ✅ Identity & Access Management (IAM)  
-- ✅ Disaster Recovery Testing & Patch Management  
-- ✅ Familiar with **PCI-DSS** from a **technical security standpoint**, including system hardening, access control, encryption, and logging best practices  
-- ✅ SAST/SCA via **Synopsys** for secure code analysis and vulnerability scanning  
-- ✅ Web Application Vulnerability Assessment using **Qualys**
-
-I have **very strong cross-functional command** over industry-standard tools and workflows, and I primarily focus on **manual pentesting techniques** — ensuring deep, accurate, and context-aware security analysis.
-
-I regularly work with tools such as:
-- **Burp Suite**
-- **Qualys**
-- **Metasploit**
-- **Nmap**
-- **Nessus**
-- And a range of **open-source security utilities**
-
-These tools are leveraged to assess and secure complex, multi-layered environments across cloud, containerized, and hybrid infrastructures.
+- 🛡️ <span style="color:#FFD700;"><strong>Indian Army</strong></span> (Hall of Fame)  
+- 🛡️ <span style="color:#FFD700;"><strong>Indian Airforce</strong></span> (sent <strong>2 detailed vulnerability reports</strong>)  
+- 🏛️ <strong>CERT France</strong>  
+- 🏛️ <strong>U.S. Department of Energy</strong> (Hall of Fame)
 
 ---
 
-## 🏆 Certifications & Memberships
+## 🔐 <span style="color:#7FFFD4;">Core Areas of Expertise</span>
 
-- Microsoft Certified: Azure Fundamentals (AZ-900)  
-- Microsoft Certified: Security, Compliance & Identity Fundamentals (SC-900)  
-- Member: Australian Information Security Association (AISA)  
+- 🧪 <strong>Manual Pentesting</strong> — deeply focused, hands-on, and context-aware testing  
+- 🧰 <strong>Tool Proficiency</strong>:  
+  <code style="color:#00CED1;">Burp Suite</code> · <code style="color:#00CED1;">Qualys</code> · <code style="color:#00CED1;">Metasploit</code> · <code style="color:#00CED1;">Nmap</code> · <code style="color:#00CED1;">Nessus</code> · and more  
+- ☁️ <strong>Cloud Pentesting</strong>: <span style="color:#FFA07A;">AWS</span>, <span style="color:#87CEFA;">GCP</span>, <span style="color:#B0C4DE;">Azure</span>  
+- 🐳 <strong>Container & Infra Security</strong>: Docker, Kubernetes, hybrid workloads  
+- 🔑 <strong>IAM & Compliance</strong>: Policy reviews, access audits, SOC alignment  
+- 🛡️ <strong>PCI-DSS Familiarity</strong>: Hardening, encryption, secure architecture, access control  
+- 🔬 <strong>SAST/SCA Integration</strong>:  
+  <span style="color:#00FA9A;">Synopsys</span> for secure code analysis  
+  · <span style="color:#00FA9A;">Qualys</span> for web app vulnerability assessments  
+- 🔄 <strong>Disaster Recovery & Patch Management</strong>: WSUS, backup validation  
+- 🎯 <strong>Red Teaming</strong>: Real-world adversary simulation to harden systems
 
----
-
-## 🎓 Education
-
-**Bachelor of Technology** in Computer Science  
-_Specialization: Cybersecurity & Digital Forensics_  
-**Vellore Institute of Technology, Bhopal**
-
----
-
-## 🌐 Connect with Me
-
-- 🔗 [Portfolio](https://nullspec7or.vercel.app)  
-- 🔗 [LinkedIn](https://www.linkedin.com/in/rupeshkumar33/)  
-- 📧 saxena.rupesh235@gmail.com
+<blockquote>
+<span style="color:#32CD32;"><strong>I bring strategic and cross-functional command over industry-grade tools and practices.</strong></span><br>
+I don’t just run scanners — I understand what, why, and how to break and defend systems.
+</blockquote>
 
 ---
 
-> “Secure code is good code, but tested systems build real trust.” – Null Spec7or
+## 🎓 <span style="color:#00CED1;">Education</span>
+
+<strong>Bachelor of Technology</strong> in Computer Science  
+<em>Specialization:</em> Cybersecurity & Digital Forensics  
+<strong>VIT Bhopal University</strong>
+
+---
+
+## 🏅 <span style="color:#FF69B4;">Certifications & Memberships</span>
+
+- 📜 Microsoft Certified: <strong>Azure Fundamentals (AZ-900)</strong>  
+- 📜 Microsoft Certified: <strong>Security, Compliance & Identity Fundamentals (SC-900)</strong>  
+- 🇦🇺 Member: <strong>Australian Information Security Association (AISA)</strong>
+
+---
+
+## 🌐 <span style="color:#FFA500;">Let’s Connect</span>
+
+- 🌍 <a href="https://nullspec7or.vercel.app" style="color:#00BFFF;"><strong>Portfolio</strong></a>  
+- 💼 <a href="https://www.linkedin.com/in/rupeshkumar33/" style="color:#00BFFF;"><strong>LinkedIn</strong></a>  
+- 📧 <a href="mailto:saxena.rupesh235@gmail.com" style="color:#00BFFF;"><strong>Email Me</strong></a>
+
+---
+
+> <em style="color:#D3D3D3;">“Secure code is good code, but tested systems build real trust.”</em> — <strong style="color:#FF6347;">Null Spec7or</strong>
