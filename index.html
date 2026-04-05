@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Penetration tester, bug bounty hunter & security researcher." />
-  <meta name="theme-color" content="#00ff6e" />
-  <meta property="og:type" content="website" />
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="NullSpec7or — Penetration Tester & Security Researcher"/>
+  <meta name="theme-color" content="#00ff6e"/>
+  <title>NullSpec7or</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>"/>
 </head>
 <body>
 
@@ -17,160 +19,181 @@
 <div class="cursor-ring"></div>
 <div class="scroll-progress"></div>
 
-<!-- ══════════════════════════════════════════
-     NAV
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ NAV ════════════════════════════ -->
 <nav>
-  <a class="nav-logo" href="#home">0xHandle</a>
-
+  <a class="nav-logo" href="#home">NullSpec7or</a>
   <ul class="nav-links">
     <li><a href="#home">~/home</a></li>
     <li><a href="#about">~/about</a></li>
-    <li><a href="#experience">~/experience</a></li>
+    <li><a href="#experience">~/exp</a></li>
     <li><a href="#certs">~/certs</a></li>
     <li><a href="#bounties">~/bounties</a></li>
     <li><a href="#blog">~/blog</a></li>
     <li><a href="#contact">~/contact</a></li>
   </ul>
-
-  <a class="nav-resume" href="#" id="resume-link" target="_blank">⬇ Resume</a>
-
-  <div class="nav-toggle" aria-label="Menu">
+  <a class="nav-resume" id="resume-link" href="#">⬇ Resume</a>
+  <div class="nav-toggle" id="nav-toggle" aria-label="Menu">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════════
-     01 · HERO
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ 01 · HERO ══════════════════════ -->
 <section class="hero" id="home">
   <div class="hero-content">
-    <div class="hero-badge"><span class="dot"></span> AVAILABLE FOR ENGAGEMENTS &amp; BOUNTIES</div>
 
-    <h1 class="hero-name glitch" data-text="0xHandle">0xHandle</h1>
+    <div class="hero-badge">
+      <span class="dot"></span>
+      AVAILABLE FOR ENGAGEMENTS &amp; BOUNTIES
+    </div>
+
+    <h1 class="hero-name">
+      <span>NullSpec7or</span>
+    </h1>
 
     <p class="hero-role">
       <span id="typed-text">Penetration Tester</span><span class="cursor-blink"></span>
     </p>
 
-    <p class="hero-tagline" id="hero-tagline">
-      Breaking things ethically · <span class="hl" data-cfg="location">Hyderabad, IN</span>
-    </p>
+    <p class="hero-location" id="hero-location">📍 <span>Hyderabad, IN 🇮🇳</span></p>
 
-    <div class="hero-stats" id="hero-stats"><!-- config.js --></div>
+    <div class="hero-stats" id="hero-stats">
+      <!-- Rendered by JS -->
+      <div class="stat"><div class="stat-num">60+</div><div class="stat-label">Machines Pwned</div></div>
+      <div class="stat"><div class="stat-num">18</div><div class="stat-label">Bug Bounties</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">CVEs Found</div></div>
+      <div class="stat"><div class="stat-num">Top3%</div><div class="stat-label">HTB Ranking</div></div>
+    </div>
 
     <div class="hero-actions">
-      <a href="#blog"    class="btn btn-primary">⚡ Writeups</a>
-      <a href="#bounties" class="btn btn-primary">🏆 Bug Bounties</a>
-      <a href="#contact" class="btn btn-ghost">📡 Hire Me</a>
+      <a href="#blog"     class="btn btn-green">⚡ Writeups</a>
+      <a href="#bounties" class="btn btn-saffron">🏆 Bounties</a>
+      <a href="#contact"  class="btn btn-ghost">📡 Hire Me</a>
     </div>
+
   </div>
 
   <div class="hero-deco">
-    <div class="hero-deco-ring"></div>
-    <div class="hero-deco-ring"></div>
-    <div class="hero-deco-ring"></div>
+    <div class="deco-ring"></div>
+    <div class="deco-ring"></div>
+    <div class="deco-ring"></div>
+    <div class="deco-grid"></div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     02 · ABOUT
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ 02 · ABOUT ═════════════════════ -->
 <section id="about">
   <div class="container">
-    <div class="section-eyebrow reveal">whoami</div>
-    <h2 class="section-title reveal">About <span>Me</span></h2>
+    <p class="sec-eye reveal">whoami</p>
+    <h2 class="sec-title reveal">About <span>Me</span></h2>
 
-    <div class="about-layout">
+    <div class="about-grid">
       <div>
-        <div class="about-body reveal" id="about-text"><!-- config.js --></div>
+        <div class="about-body reveal" id="about-text">
+          <p>I'm a penetration tester and vulnerability researcher specialising in web application security, network infra, Active Directory attacks, and critical sector research — government, defence, fintech, railways, automotive.</p>
+          <p>My approach: understand deeply, chain low issues into critical impact, document everything. I've reported to national defence labs, central government ministries, and Fortune-class enterprises.</p>
+          <p>Off-engagement I sharpen my edge on <span class="hl">HackTheBox</span>, <span class="hl">TryHackMe</span>, and competitive CTFs. Everything I learn goes into public writeups.</p>
+        </div>
 
-        <div class="platforms-row reveal" id="platforms-grid"><!-- config.js --></div>
+        <div class="platforms-grid" id="platforms-grid">
+          <!-- Rendered by JS -->
+        </div>
       </div>
 
-      <div class="skills-list" id="skills-list"><!-- config.js --></div>
+      <div id="skills-list">
+        <!-- Rendered by JS -->
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     03 · EXPERIENCE
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ 03 · EXPERIENCE ═══════════════ -->
 <section id="experience">
   <div class="container">
-    <div class="section-eyebrow reveal">work history</div>
-    <h2 class="section-title reveal">Professional <span>Experience</span></h2>
-    <div class="timeline" id="timeline"><!-- config.js --></div>
+    <p class="sec-eye reveal">work history</p>
+    <h2 class="sec-title reveal">Professional <span>Experience</span></h2>
+  </div>
+
+  <div class="carousel-wrap reveal">
+    <div class="carousel-track" id="exp-track">
+      <!-- Rendered by JS + duplicated for loop -->
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     04 · CERTIFICATIONS
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ 04 · CERTS ═════════════════════ -->
 <section id="certs">
   <div class="container">
-    <div class="section-eyebrow reveal">credentials</div>
-    <h2 class="section-title reveal">Certifications &amp; <span>Training</span></h2>
-    <div class="certs-grid" id="certs-grid"><!-- config.js --></div>
+    <p class="sec-eye reveal">credentials</p>
+    <h2 class="sec-title reveal">Certifications <span>&amp; Training</span></h2>
+  </div>
+
+  <div class="carousel-wrap reveal">
+    <div class="carousel-track slow" id="cert-track">
+      <!-- Rendered by JS + duplicated for loop -->
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     05 · BUG BOUNTIES
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ 05 · BUG BOUNTIES ═════════════ -->
 <section id="bounties">
   <div class="container">
-    <div class="section-eyebrow reveal">vulnerability research</div>
-    <h2 class="section-title reveal">Bug Bounties <span>&amp; VDP</span></h2>
+    <p class="sec-eye reveal">vulnerability research</p>
+    <h2 class="sec-title reveal">Bug Bounties <span>&amp; VDP</span></h2>
 
-    <div class="bounty-stats" id="bounty-stats"><!-- config.js --></div>
+    <!-- Stats -->
+    <div class="b-stats" id="b-stats">
+      <!-- Rendered by JS -->
+    </div>
 
-    <div class="bounties-grid" id="bounties-grid"><!-- config.js --></div>
+    <!-- Tricolour divider -->
+    <div class="tri-divider"></div>
+  </div>
+
+  <div class="carousel-wrap reveal">
+    <div class="carousel-track fast" id="bounty-track">
+      <!-- Rendered by JS + duplicated for loop -->
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     06 · BLOG / WRITEUPS
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ 06 · BLOG ══════════════════════ -->
 <section id="blog">
   <div class="container">
-    <div class="section-eyebrow reveal">knowledge base</div>
-    <h2 class="section-title reveal">Writeups <span>&amp; Research</span></h2>
+    <p class="sec-eye reveal">knowledge base</p>
+    <h2 class="sec-title reveal">Writeups <span>&amp; Research</span></h2>
 
     <div class="blog-controls reveal">
       <div class="search-wrap">
         <span class="search-icon">⌕</span>
         <input id="blog-search" type="text" autocomplete="off" spellcheck="false"
-          placeholder="Search by title, tag, or platform..." />
+          placeholder="Search by title, tag, or platform…"/>
       </div>
-      <div class="tag-strip" id="tag-strip"><!-- posts.js --></div>
+      <div class="tag-strip" id="tag-strip"></div>
     </div>
 
     <div class="blog-grid" id="blog-grid">
       <div class="no-results" id="no-results">
         <p>[ NO_RESULTS_FOUND ]</p>
-        <p style="margin-top:.4rem;font-size:.72rem">Try a different search term or tag</p>
+        <p style="margin-top:.4rem;font-size:.72rem">Try a different search or tag</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     07 · CONTACT
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ 07 · CONTACT ══════════════════ -->
 <section id="contact">
   <div class="container">
-    <div class="section-eyebrow reveal">get in touch</div>
-    <h2 class="section-title reveal">Contact <span>&amp; Socials</span></h2>
+    <p class="sec-eye reveal">get in touch</p>
+    <h2 class="sec-title reveal">Contact <span>&amp; Socials</span></h2>
 
-    <div class="contact-layout">
+    <div class="contact-grid">
 
       <div class="reveal">
         <p class="contact-lead">
-          Looking to collaborate on a CTF, need a penetration test, or discovered a vulnerability you'd like
-          to discuss? Reach out — PGP key available on request.
+          Looking to collaborate on a CTF, need a penetration test, or found a vulnerability
+          you'd like to discuss? Reach out — PGP available on request.
         </p>
-        <div class="social-list" id="social-list"><!-- config.js --></div>
+        <div class="social-list" id="social-list"></div>
       </div>
 
       <div class="reveal">
@@ -182,33 +205,37 @@
             <span class="t-title">contact.sh — bash</span>
           </div>
           <div class="terminal-body">
-            <div class="t-line"><span class="t-p">┌──(</span><span class="t-cmd">visitor</span><span class="t-p">㉿</span><span class="t-arg" data-cfg="handle">0xHandle</span><span class="t-p">)-[~]</span></div>
-            <div class="t-line"><span class="t-p">└─$</span>&nbsp;<span class="t-cmd">init_contact</span>&nbsp;<span class="t-arg">--secure</span>&nbsp;<span class="t-arg">--encrypted</span></div>
+            <div class="t-line">
+              <span class="t-p">┌──(</span><span style="color:#00d4ff">visitor</span><span class="t-p">㉿</span><span class="t-arg" data-cfg="handle">NullSpec7or</span><span class="t-p">)-[~]</span>
+            </div>
+            <div class="t-line">
+              <span class="t-p">└─$</span>&nbsp;<span class="t-cmd">init_contact</span>&nbsp;<span class="t-arg">--pgp</span>&nbsp;<span class="t-arg" data-cfg="pgp">0xDEAD7EC7</span>
+            </div>
             <span class="t-out">[*] Establishing encrypted channel...</span>
-            <span class="t-out">[+] PGP: <span style="color:var(--accent)" data-cfg="pgp">0xDEADBEEF</span></span>
-            <span class="t-out">[+] Channel ready. Fill the form below.</span>
+            <span class="t-out">[+] PGP handshake complete.</span>
+            <span class="t-out">[+] Ready. Fill form below.</span>
           </div>
         </div>
 
-        <!-- Wire to Formspree: action="https://formspree.io/f/YOUR_ID" method="POST" -->
+        <!-- Swap action for Formspree: action="https://formspree.io/f/YOUR_ID" method="POST" -->
         <form class="contact-form" onsubmit="handleContact(event)">
           <div class="fg">
             <label for="f-name">// handle or name</label>
-            <input id="f-name" name="name" type="text" required placeholder="0xVisitor" />
+            <input id="f-name" name="name" type="text" required placeholder="0xVisitor"/>
           </div>
           <div class="fg">
             <label for="f-email">// email</label>
-            <input id="f-email" name="email" type="email" required placeholder="you@proton.me" />
+            <input id="f-email" name="email" type="email" required placeholder="you@proton.me"/>
           </div>
           <div class="fg">
             <label for="f-msg">// message</label>
-            <textarea id="f-msg" name="message" rows="5" required placeholder="Type your message..."></textarea>
+            <textarea id="f-msg" name="message" rows="4" required placeholder="Type your message..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+          <button type="submit" class="btn btn-saffron" style="width:100%;justify-content:center">
             SEND MESSAGE
           </button>
           <div class="form-success" id="form-success">
-            [+] Message transmitted. Will respond within 24h.
+            [+] Transmitted. Will respond within 24h.
           </div>
         </form>
       </div>
@@ -217,16 +244,14 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     FOOTER
-═══════════════════════════════════════════ -->
+<!-- ══════════════════ FOOTER ═════════════════════════ -->
 <footer>
-  <p class="footer-copy">
-    © <span data-cfg="year"></span> <span data-cfg="handle">0xHandle</span>
-    · Built with ☕ and terminal sessions
+  <p class="footer-copy" id="footer-copy">
+    © <span data-cfg="year"></span> <span style="color:var(--green)">NullSpec7or</span>
+    · Built with ☕ and late nights
   </p>
   <div class="footer-right">
-    <nav class="footer-links">
+    <nav class="footer-nav">
       <a href="#home">Home</a>
       <a href="#blog">Writeups</a>
       <a href="#bounties">Bounties</a>
@@ -239,45 +264,15 @@
   </div>
 </footer>
 
-<!-- ══════════════════════════════════════════
-     MODAL
-═══════════════════════════════════════════ -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-header">
-      <div class="modal-meta" id="modal-meta"></div>
-      <h2 class="modal-title" id="modal-title"></h2>
-      <div class="card-tags" id="modal-tags" style="margin-top:.9rem"></div>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     SCRIPTS
-═══════════════════════════════════════════ -->
-<script src="js/config.js"></script>
-<script src="posts/posts.js"></script>
+<!-- ══════════════════ SCRIPTS ════════════════════════ -->
+<!-- data.js MUST load first — no async/defer -->
+<script src="js/data.js"></script>
 <script src="js/main.js"></script>
 
 <script>
-  /* Nav toggle inline so it works before main.js */
-  document.querySelector('.nav-toggle').addEventListener('click', function() {
+  /* Inline nav toggle — works even before main.js parses */
+  document.getElementById('nav-toggle').addEventListener('click', function() {
     document.querySelector('.nav-links').classList.toggle('open');
-  });
-  /* Resume link from config */
-  window.addEventListener('DOMContentLoaded', () => {
-    if (window.CONFIG && CONFIG.resumeUrl)
-      document.getElementById('resume-link').href = CONFIG.resumeUrl;
-    if (window.CONFIG && CONFIG.pgp)
-      document.querySelectorAll('[data-cfg="pgp"]').forEach(el => el.textContent = CONFIG.pgp);
-    document.querySelectorAll('[data-cfg="year"]').forEach(el => el.textContent = new Date().getFullYear());
-    document.querySelectorAll('[data-cfg="handle"]').forEach(el => el.textContent = CONFIG.handle);
-    document.querySelector('.nav-logo').textContent = CONFIG.handle;
-    // update hero tagline location
-    const loc = document.querySelector('[data-cfg="location"]');
-    if (loc && CONFIG.location) loc.textContent = CONFIG.location;
   });
 </script>
 
