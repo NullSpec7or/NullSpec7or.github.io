@@ -414,6 +414,7 @@ const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
   if (tw) {
     const phrases = [
       'Cybersecurity Engineer',
+      'OWASP Appsec Europe 2026 Speaker',
       'Red Team Operator',
       'Exploit Developer',
       'OSCP Candidate',
