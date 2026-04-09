@@ -145,9 +145,10 @@ const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
     '[ OK ] Initializing offensive security suite...',
     '[ OK ] Loading kernel modules...',
     '[ OK ] Mounting /proc/nullspec7or...',
-    '[ OK ] Establishing encrypted channel...',
+    '[ OK ] Establishing encrypted channel with operator...',
     '[ OK ] Bypassing IDS/IPS signatures...',
     '[ OK ] Spawning TTY shell... done',
+    '[ OK ] Profiling the visitor... done',
     '[ OK ] All systems operational. Welcome.',
   ];
 
