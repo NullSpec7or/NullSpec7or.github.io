@@ -593,7 +593,7 @@ const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
     matrix: () => `<span style="color:#00ff88;animation:fadeIn 0.3s">
 Wake up, Neo...</span>`,
     htb: () => `HTB Rank: Pro Hacker\nMachines Rooted: 50+\nActive Labs: Offshore, RastaLabs`,
-    flag: () => `HTB{n3v3r_5t0p_h4ck1ng_1nd14}`,
+    flag: () => `[ACCESS GRANTED] w3lc0m3_70_7h3_r34l_51d3`,
     pwd: () => '/home/nullspec7or',
     ls: () => 'about.txt  projects/  blog/  achievements/  contact.sh',
     date: () => new Date().toString(),
