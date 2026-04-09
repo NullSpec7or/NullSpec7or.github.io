@@ -389,7 +389,7 @@ const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
   // Name reveal with glitch
   const nameEl = $('#heroName');
   if (nameEl) {
-    const name = 'RK';
+    const name = 'Rupesh Kumar';
     let revealed = '';
     const chars = '!@#$%^&*0123456789ABCDEF';
     let iterations = 0;
