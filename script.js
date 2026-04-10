@@ -486,7 +486,7 @@ const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
 (function initHeroText() {
   const nameEl = $('#heroName');
   if (nameEl) {
-    const name = 'RK';
+    const name = 'Rupesh Kumar';
     const CHARS = '!@#$%^&*[]{}|<>0123456789ABCDEF';
     nameEl.textContent = name;
     setTimeout(() => {
