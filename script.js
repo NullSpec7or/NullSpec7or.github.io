@@ -94,171 +94,314 @@ const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
 // ============================================================
 // WORLD MAP + INDIA→WORLD CONNECTION ARCS (hero overlay)
 // ============================================================
+// (function initWorldMap() {
+//   const hero = document.getElementById('hero');
+//   if (!hero) return;
+//   // Remove old india map canvas if any
+//   const oldWrap = document.querySelector('.india-map-container');
+//   if (oldWrap) oldWrap.style.display = 'none';
+//   const oldHeroCanvas = document.getElementById('heroCanvas');
+//   if (oldHeroCanvas) oldHeroCanvas.style.display = 'none';
+
+//   const canvas = document.createElement('canvas');
+//   canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;';
+//   hero.appendChild(canvas);
+//   const ctx = canvas.getContext('2d');
+//   let W, H, t = 0;
+
+//   // Equirectangular projection helper
+//   const ll = (lon, lat, w, h) => [(lon + 180) / 360 * w, (90 - lat) / 180 * h];
+
+//   // Simplified world continent outlines [lon,lat] null=pen-up
+//   const CONTINENTS = [
+//     // Europe/Africa
+//     [[-10,36],[0,36],[10,36],[20,35],[28,32],[34,30],[37,12],[40,5],[40,-5],[30,-18],[20,-35],[18,-34],[15,-22],[10,-5],[5,5],[0,5],[-5,5],[-15,15],[-17,20],[-10,36]],
+//     // North America
+//     [[-60,50],[-75,43],[-82,30],[-90,28],[-95,25],[-88,16],[-78,9],[-83,12],[-90,18],[-100,20],[-108,24],[-117,33],[-120,47],[-130,54],[-138,58],[-140,62],[-152,62],[-155,59],[-163,55],[-168,63],[-170,64],[-140,70],[-80,72],[-65,68],[-60,50]],
+//     // South America
+//     [[-35,-5],[-40,-10],[-50,-14],[-55,-25],[-65,-38],[-68,-52],[-70,-55],[-75,-50],[-80,-35],[-78,-5],[-75,5],[-60,5],[-50,2],[-40,-2],[-35,-5]],
+//     // Asia main (rough)
+//     [[26,36],[35,38],[45,38],[55,35],[60,22],[68,22],[75,22],[80,28],[85,26],[90,22],[100,12],[105,10],[110,5],[120,20],[125,22],[130,30],[138,34],[140,38],[142,42],[140,55],[130,55],[120,52],[110,50],[100,48],[90,42],[80,38],[70,36],[60,37],[48,40],[40,40],[35,36],[28,36],[26,36]],
+//     // Australia
+//     [[115,-32],[120,-28],[130,-18],[136,-12],[140,-14],[148,-18],[154,-24],[155,-28],[152,-34],[148,-38],[144,-38],[138,-36],[130,-32],[125,-34],[115,-34],[115,-32]],
+//     // India detailed
+//     [[68,23],[70,20],[72,22],[72,19],[74,17],[76,14],[78,9],[80,9],[80,8],[78,8],[80,12],[80,18],[78,20],[76,22],[74,24],[72,24],[70,24],[68,24],[67,22],[68,23]],
+//   ];
+
+//   // Key cities [lon,lat]
+//   const CITIES = {
+//     hyderabad: [78.47, 17.38],
+//     london:    [-0.12, 51.51],
+//     newyork:   [-74.0, 40.71],
+//     berlin:    [13.4,  52.52],
+//     singapore: [103.8, 1.35],
+//     tokyo:     [139.7, 35.68],
+//     sydney:    [151.2, -33.87],
+//     dubai:     [55.3,  25.2],
+//     moscow:    [37.6,  55.75],
+//     beijing:   [116.4, 39.9],
+//     nairobi:   [36.8,  -1.28],
+//   };
+
+//   // Arc state
+//   const DESTS = Object.entries(CITIES).filter(([k]) => k !== 'hyderabad');
+//   const arcs = DESTS.map(([name, pos], i) => ({
+//     name, to: pos, from: CITIES.hyderabad,
+//     prog: 0, speed: 0.0025 + Math.random() * 0.002,
+//     delay: i * 55, paused: 0,
+//     col: i % 3 === 0 ? [255, 107, 53] : [0, 255, 136],
+//     pulse: Math.random() * Math.PI * 2,
+//   }));
+
+//   function bezierPt(ax, ay, bx, by, t) {
+//     const mx = (ax + bx) / 2, my = (ay + by) / 2;
+//     const dx = bx - ax, dy = by - ay;
+//     const len = Math.hypot(dx, dy) || 1;
+//     const lift = len * 0.32;
+//     const cx = mx - (dy / len) * lift, cy = my + (dx / len) * lift;
+//     return {
+//       x: (1-t)*(1-t)*ax + 2*(1-t)*t*cx + t*t*bx,
+//       y: (1-t)*(1-t)*ay + 2*(1-t)*t*cy + t*t*by,
+//     };
+//   }
+
+//   function drawMap() {
+//     ctx.lineWidth = 0.8;
+//     CONTINENTS.forEach(pts => {
+//       ctx.beginPath();
+//       pts.forEach((p, i) => {
+//         if (!p) { ctx.stroke(); ctx.beginPath(); return; }
+//         const [x, y] = ll(p[0], p[1], W, H);
+//         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+//       });
+//       ctx.strokeStyle = 'rgba(0,255,136,0.07)'; ctx.stroke();
+//     });
+
+//     // India highlight
+//     const india = CONTINENTS[CONTINENTS.length - 1];
+//     ctx.beginPath();
+//     india.forEach((p, i) => {
+//       if (!p) return;
+//       const [x, y] = ll(p[0], p[1], W, H);
+//       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+//     });
+//     ctx.closePath();
+//     ctx.strokeStyle = 'rgba(255,153,51,0.55)'; ctx.lineWidth = 1.8;
+//     ctx.shadowColor = 'rgba(255,153,51,0.5)'; ctx.shadowBlur = 8; ctx.stroke();
+//     ctx.fillStyle = 'rgba(255,153,51,0.05)'; ctx.fill();
+//     ctx.shadowBlur = 0;
+//   }
+
+//   function drawArcs() {
+//     const [hx, hy] = ll(CITIES.hyderabad[0], CITIES.hyderabad[1], W, H);
+
+//     // Hyderabad pulse
+//     const pulse = Math.sin(t * 0.05) * 0.5 + 0.5;
+//     for (let r = 1; r <= 3; r++) {
+//       ctx.beginPath(); ctx.arc(hx, hy, 5 + r * 9 * pulse, 0, Math.PI * 2);
+//       ctx.strokeStyle = `rgba(255,153,51,${0.28 - r * 0.07})`; ctx.lineWidth = 1; ctx.stroke();
+//     }
+//     ctx.beginPath(); ctx.arc(hx, hy, 4, 0, Math.PI * 2);
+//     ctx.fillStyle = '#FF9933'; ctx.shadowColor = '#FF9933'; ctx.shadowBlur = 14; ctx.fill();
+//     ctx.shadowBlur = 0;
+
+//     arcs.forEach(arc => {
+//       if (t < arc.delay) return;
+//       if (arc.paused > 0) { arc.paused--; if (arc.paused === 0) { arc.prog = 0; arc.delay = t + ~~(Math.random() * 80 + 20); } return; }
+
+//       arc.prog = Math.min(arc.prog + arc.speed, 1);
+//       if (arc.prog >= 1) { arc.paused = 100; return; }
+
+//       const [ax, ay] = ll(arc.from[0], arc.from[1], W, H);
+//       const [bx, by] = ll(arc.to[0], arc.to[1], W, H);
+//       const [r, g, b] = arc.col;
+//       const TRAIL = 38;
+
+//       for (let s = 0; s < TRAIL; s++) {
+//         const t0 = Math.max(0, arc.prog - (s + 1) / TRAIL * 0.38);
+//         const t1 = Math.max(0, arc.prog - s / TRAIL * 0.38);
+//         if (t1 <= 0) break;
+//         const p0 = bezierPt(ax, ay, bx, by, t0);
+//         const p1 = bezierPt(ax, ay, bx, by, t1);
+//         const alpha = (1 - s / TRAIL) * 0.65;
+//         ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y);
+//         ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`; ctx.lineWidth = 1.8 - s * 0.04; ctx.stroke();
+//       }
+
+//       const head = bezierPt(ax, ay, bx, by, arc.prog);
+//       ctx.beginPath(); ctx.arc(head.x, head.y, 3, 0, Math.PI * 2);
+//       ctx.fillStyle = `rgba(${r},${g},${b},0.95)`; ctx.shadowColor = `rgb(${r},${g},${b})`; ctx.shadowBlur = 10; ctx.fill();
+//       ctx.shadowBlur = 0;
+
+//       // Destination dot
+//       const cp = Math.sin(t * 0.07 + arc.pulse) * 0.5 + 0.5;
+//       ctx.beginPath(); ctx.arc(bx, by, 2 + cp * 3, 0, Math.PI * 2);
+//       ctx.strokeStyle = `rgba(${r},${g},${b},${0.35 * arc.prog})`; ctx.lineWidth = 1; ctx.stroke();
+//       ctx.beginPath(); ctx.arc(bx, by, 2, 0, Math.PI * 2);
+//       ctx.fillStyle = `rgba(${r},${g},${b},${0.75 * arc.prog})`; ctx.fill();
+//     });
+//   }
+
+//   function frame() {
+//     ctx.clearRect(0, 0, W, H);
+//     t++;
+//     drawMap();
+//     drawArcs();
+//     requestAnimationFrame(frame);
+//   }
+
+//   function resize() {
+//     W = canvas.width = canvas.offsetWidth || window.innerWidth;
+//     H = canvas.height = canvas.offsetHeight || window.innerHeight;
+//   }
+
+//   window.addEventListener('resize', resize);
+//   setTimeout(() => { resize(); frame(); }, 200);
+// })();
 (function initWorldMap() {
   const hero = document.getElementById('hero');
   if (!hero) return;
-  // Remove old india map canvas if any
-  const oldWrap = document.querySelector('.india-map-container');
-  if (oldWrap) oldWrap.style.display = 'none';
-  const oldHeroCanvas = document.getElementById('heroCanvas');
-  if (oldHeroCanvas) oldHeroCanvas.style.display = 'none';
+
+  // ✅ Ensure hero is a positioning context
+  if (getComputedStyle(hero).position === 'static') {
+    hero.style.position = 'relative';
+  }
 
   const canvas = document.createElement('canvas');
-  canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;';
+  canvas.style.cssText = `
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    pointer-events:none;
+  `;
   hero.appendChild(canvas);
+
   const ctx = canvas.getContext('2d');
-  let W, H, t = 0;
 
-  // Equirectangular projection helper
-  const ll = (lon, lat, w, h) => [(lon + 180) / 360 * w, (90 - lat) / 180 * h];
+  let W = 0, H = 0, t = 0;
 
-  // Simplified world continent outlines [lon,lat] null=pen-up
+  // ✅ FIX: proper DPI scaling (this was a BIG issue)
+  function resize() {
+    const rect = hero.getBoundingClientRect();
+
+    const dpr = window.devicePixelRatio || 1;
+
+    W = rect.width;
+    H = rect.height;
+
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // scale drawing
+  }
+
+  // projection
+  const ll = (lon, lat) => [
+    (lon + 180) / 360 * W,
+    (90 - lat) / 180 * H
+  ];
+
   const CONTINENTS = [
-    // Europe/Africa
     [[-10,36],[0,36],[10,36],[20,35],[28,32],[34,30],[37,12],[40,5],[40,-5],[30,-18],[20,-35],[18,-34],[15,-22],[10,-5],[5,5],[0,5],[-5,5],[-15,15],[-17,20],[-10,36]],
-    // North America
     [[-60,50],[-75,43],[-82,30],[-90,28],[-95,25],[-88,16],[-78,9],[-83,12],[-90,18],[-100,20],[-108,24],[-117,33],[-120,47],[-130,54],[-138,58],[-140,62],[-152,62],[-155,59],[-163,55],[-168,63],[-170,64],[-140,70],[-80,72],[-65,68],[-60,50]],
-    // South America
     [[-35,-5],[-40,-10],[-50,-14],[-55,-25],[-65,-38],[-68,-52],[-70,-55],[-75,-50],[-80,-35],[-78,-5],[-75,5],[-60,5],[-50,2],[-40,-2],[-35,-5]],
-    // Asia main (rough)
     [[26,36],[35,38],[45,38],[55,35],[60,22],[68,22],[75,22],[80,28],[85,26],[90,22],[100,12],[105,10],[110,5],[120,20],[125,22],[130,30],[138,34],[140,38],[142,42],[140,55],[130,55],[120,52],[110,50],[100,48],[90,42],[80,38],[70,36],[60,37],[48,40],[40,40],[35,36],[28,36],[26,36]],
-    // Australia
     [[115,-32],[120,-28],[130,-18],[136,-12],[140,-14],[148,-18],[154,-24],[155,-28],[152,-34],[148,-38],[144,-38],[138,-36],[130,-32],[125,-34],[115,-34],[115,-32]],
-    // India detailed
     [[68,23],[70,20],[72,22],[72,19],[74,17],[76,14],[78,9],[80,9],[80,8],[78,8],[80,12],[80,18],[78,20],[76,22],[74,24],[72,24],[70,24],[68,24],[67,22],[68,23]],
   ];
 
-  // Key cities [lon,lat]
   const CITIES = {
     hyderabad: [78.47, 17.38],
-    london:    [-0.12, 51.51],
-    newyork:   [-74.0, 40.71],
-    berlin:    [13.4,  52.52],
-    singapore: [103.8, 1.35],
-    tokyo:     [139.7, 35.68],
-    sydney:    [151.2, -33.87],
-    dubai:     [55.3,  25.2],
-    moscow:    [37.6,  55.75],
-    beijing:   [116.4, 39.9],
-    nairobi:   [36.8,  -1.28],
+    london: [-0.12, 51.51],
+    newyork: [-74.0, 40.71],
+    tokyo: [139.7, 35.68],
   };
 
-  // Arc state
   const DESTS = Object.entries(CITIES).filter(([k]) => k !== 'hyderabad');
+
   const arcs = DESTS.map(([name, pos], i) => ({
-    name, to: pos, from: CITIES.hyderabad,
-    prog: 0, speed: 0.0025 + Math.random() * 0.002,
-    delay: i * 55, paused: 0,
-    col: i % 3 === 0 ? [255, 107, 53] : [0, 255, 136],
-    pulse: Math.random() * Math.PI * 2,
+    to: pos,
+    from: CITIES.hyderabad,
+    prog: 0,
+    speed: 0.003,
   }));
 
-  function bezierPt(ax, ay, bx, by, t) {
-    const mx = (ax + bx) / 2, my = (ay + by) / 2;
-    const dx = bx - ax, dy = by - ay;
+  function bezier(ax, ay, bx, by, t) {
+    const mx = (ax + bx) / 2;
+    const my = (ay + by) / 2;
+
+    const dx = bx - ax;
+    const dy = by - ay;
+
     const len = Math.hypot(dx, dy) || 1;
-    const lift = len * 0.32;
-    const cx = mx - (dy / len) * lift, cy = my + (dx / len) * lift;
+    const lift = len * 0.3;
+
+    const cx = mx - (dy / len) * lift;
+    const cy = my + (dx / len) * lift;
+
     return {
       x: (1-t)*(1-t)*ax + 2*(1-t)*t*cx + t*t*bx,
-      y: (1-t)*(1-t)*ay + 2*(1-t)*t*cy + t*t*by,
+      y: (1-t)*(1-t)*ay + 2*(1-t)*t*cy + t*t*by
     };
   }
 
   function drawMap() {
-    ctx.lineWidth = 0.8;
+    ctx.lineWidth = 1;
+
     CONTINENTS.forEach(pts => {
       ctx.beginPath();
       pts.forEach((p, i) => {
-        if (!p) { ctx.stroke(); ctx.beginPath(); return; }
-        const [x, y] = ll(p[0], p[1], W, H);
+        const [x, y] = ll(p[0], p[1]);
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       });
-      ctx.strokeStyle = 'rgba(0,255,136,0.07)'; ctx.stroke();
+      ctx.strokeStyle = 'rgba(0,255,136,0.08)';
+      ctx.stroke();
     });
-
-    // India highlight
-    const india = CONTINENTS[CONTINENTS.length - 1];
-    ctx.beginPath();
-    india.forEach((p, i) => {
-      if (!p) return;
-      const [x, y] = ll(p[0], p[1], W, H);
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    });
-    ctx.closePath();
-    ctx.strokeStyle = 'rgba(255,153,51,0.55)'; ctx.lineWidth = 1.8;
-    ctx.shadowColor = 'rgba(255,153,51,0.5)'; ctx.shadowBlur = 8; ctx.stroke();
-    ctx.fillStyle = 'rgba(255,153,51,0.05)'; ctx.fill();
-    ctx.shadowBlur = 0;
   }
 
   function drawArcs() {
-    const [hx, hy] = ll(CITIES.hyderabad[0], CITIES.hyderabad[1], W, H);
-
-    // Hyderabad pulse
-    const pulse = Math.sin(t * 0.05) * 0.5 + 0.5;
-    for (let r = 1; r <= 3; r++) {
-      ctx.beginPath(); ctx.arc(hx, hy, 5 + r * 9 * pulse, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(255,153,51,${0.28 - r * 0.07})`; ctx.lineWidth = 1; ctx.stroke();
-    }
-    ctx.beginPath(); ctx.arc(hx, hy, 4, 0, Math.PI * 2);
-    ctx.fillStyle = '#FF9933'; ctx.shadowColor = '#FF9933'; ctx.shadowBlur = 14; ctx.fill();
-    ctx.shadowBlur = 0;
+    const [hx, hy] = ll(...CITIES.hyderabad);
 
     arcs.forEach(arc => {
-      if (t < arc.delay) return;
-      if (arc.paused > 0) { arc.paused--; if (arc.paused === 0) { arc.prog = 0; arc.delay = t + ~~(Math.random() * 80 + 20); } return; }
+      arc.prog += arc.speed;
+      if (arc.prog > 1) arc.prog = 0;
 
-      arc.prog = Math.min(arc.prog + arc.speed, 1);
-      if (arc.prog >= 1) { arc.paused = 100; return; }
+      const [ax, ay] = ll(...arc.from);
+      const [bx, by] = ll(...arc.to);
 
-      const [ax, ay] = ll(arc.from[0], arc.from[1], W, H);
-      const [bx, by] = ll(arc.to[0], arc.to[1], W, H);
-      const [r, g, b] = arc.col;
-      const TRAIL = 38;
+      const p = bezier(ax, ay, bx, by, arc.prog);
 
-      for (let s = 0; s < TRAIL; s++) {
-        const t0 = Math.max(0, arc.prog - (s + 1) / TRAIL * 0.38);
-        const t1 = Math.max(0, arc.prog - s / TRAIL * 0.38);
-        if (t1 <= 0) break;
-        const p0 = bezierPt(ax, ay, bx, by, t0);
-        const p1 = bezierPt(ax, ay, bx, by, t1);
-        const alpha = (1 - s / TRAIL) * 0.65;
-        ctx.beginPath(); ctx.moveTo(p0.x, p0.y); ctx.lineTo(p1.x, p1.y);
-        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`; ctx.lineWidth = 1.8 - s * 0.04; ctx.stroke();
-      }
-
-      const head = bezierPt(ax, ay, bx, by, arc.prog);
-      ctx.beginPath(); ctx.arc(head.x, head.y, 3, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r},${g},${b},0.95)`; ctx.shadowColor = `rgb(${r},${g},${b})`; ctx.shadowBlur = 10; ctx.fill();
-      ctx.shadowBlur = 0;
-
-      // Destination dot
-      const cp = Math.sin(t * 0.07 + arc.pulse) * 0.5 + 0.5;
-      ctx.beginPath(); ctx.arc(bx, by, 2 + cp * 3, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(${r},${g},${b},${0.35 * arc.prog})`; ctx.lineWidth = 1; ctx.stroke();
-      ctx.beginPath(); ctx.arc(bx, by, 2, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r},${g},${b},${0.75 * arc.prog})`; ctx.fill();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#00ff88';
+      ctx.fill();
     });
+
+    // origin dot
+    ctx.beginPath();
+    ctx.arc(hx, hy, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#FF9933';
+    ctx.fill();
   }
 
   function frame() {
     ctx.clearRect(0, 0, W, H);
-    t++;
     drawMap();
     drawArcs();
     requestAnimationFrame(frame);
   }
 
-  function resize() {
-    W = canvas.width = canvas.offsetWidth || window.innerWidth;
-    H = canvas.height = canvas.offsetHeight || window.innerHeight;
-  }
-
   window.addEventListener('resize', resize);
-  setTimeout(() => { resize(); frame(); }, 200);
-})();
 
+  resize();
+  frame();
+})();
 // ============================================================
 // SCROLL PROGRESS
 // ============================================================
