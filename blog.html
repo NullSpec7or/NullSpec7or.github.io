@@ -3,30 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog | nullspec7or — Offensive Security</title>
-  <meta name="description" content="Technical write-ups on offensive security, exploit development, CTF walkthroughs and red team methodology." />
+  <title>Null Spec7or's Blog | nullspec7or</title>
+  <meta name="description" content="Technical write-ups on offensive security, CVEs, CTF walkthroughs, AD attacks, and red team methodology." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-  <!-- marked.js for markdown parsing -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
-  <!-- highlight.js for code syntax highlighting -->
+  <!-- highlight.js dark theme -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- marked.js markdown parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="blog-page">
+
   <!-- Custom Cursor -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
-  <!-- Scroll Progress -->
+  <!-- Scroll Progress (used on mobile where page scrolls) -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
   <!-- NAV -->
-  <nav class="nav" id="mainNav">
+  <nav class="nav scrolled" id="mainNav">
     <div class="nav-logo">
-      <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit">
-        <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+        <svg width="34" height="34" viewBox="0 0 60 60" fill="none">
           <polygon points="30,2 58,18 58,42 30,58 2,42 2,18" stroke="#00ff88" stroke-width="1.5" fill="none"/>
           <text x="30" y="35" text-anchor="middle" fill="#00ff88" font-family="Share Tech Mono" font-size="14">RK</text>
         </svg>
@@ -36,6 +37,7 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html#about">ABOUT</a></li>
       <li><a href="index.html#projects">PROJECTS</a></li>
+      <li><a href="index.html#achievements">ACHIEVEMENTS</a></li>
       <li><a href="index.html#contact">CONTACT</a></li>
       <li><a href="blog.html" class="nav-blog active">BLOG</a></li>
     </ul>
@@ -44,29 +46,45 @@
     </button>
   </nav>
 
-  <!-- BLOG LAYOUT -->
+  <!-- BLOG MAIN LAYOUT: sidebar left + content right -->
   <main class="blog-main">
-    <!-- LEFT: Blog List -->
+
+    <!-- LEFT SIDEBAR -->
     <aside class="blog-sidebar" id="blogSidebar">
       <div class="blog-sidebar-head">
-        <h1 class="blog-sidebar-title">
-          <svg width="20" height="20" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
-          Intel Feed
-        </h1>
+
+        <!-- Brand / Title -->
+        <div class="blog-page-brand">
+          <div class="blog-page-brand-icon">
+            <svg width="18" height="18" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div>
+            <h1>Null Spec7or's Blog</h1>
+            <span>OFFENSIVE SECURITY INTEL</span>
+          </div>
+        </div>
+
         <!-- Search -->
         <div class="blog-search-wrap">
-          <svg width="16" height="16" fill="none" stroke="#888" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          <input type="text" id="blogSearch" class="blog-search" placeholder="Search posts..." />
+          <svg width="14" height="14" fill="none" stroke="#56708a" stroke-width="1.5" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" id="blogSearch" class="blog-search" placeholder="Search posts, tags..." autocomplete="off" />
         </div>
+
         <!-- Tag Filters -->
         <div class="blog-tags-filter" id="blogTagsFilter">
           <button class="tag-filter active" data-tag="all">All</button>
         </div>
+
       </div>
+
       <!-- Post List -->
       <div class="blog-list" id="blogList">
-        <!-- Populated by JS -->
         <div class="blog-list-skeleton">
+          <div class="skeleton-item"></div>
           <div class="skeleton-item"></div>
           <div class="skeleton-item"></div>
           <div class="skeleton-item"></div>
@@ -74,19 +92,50 @@
       </div>
     </aside>
 
-    <!-- RIGHT: Blog Content -->
+    <!-- RIGHT CONTENT -->
     <div class="blog-content-area" id="blogContentArea">
+
+      <!-- Hero banner always shown at top of right panel -->
+      <div class="blog-content-hero">
+        <span class="bch-label">root@nullspec7or:~/blog$</span>
+        <h2 class="bch-title">Null <span>Inspe7or's</span> Blog</h2>
+        <p class="bch-sub">Red team walkthroughs · CVE analysis · AD exploitation · OSCP prep · SIEM architecture</p>
+        <div class="bch-stats">
+          <div class="bch-stat">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span id="postCount">5 posts</span>
+          </div>
+          <div class="bch-stat">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Updated Jan 2025</span>
+          </div>
+          <div class="bch-stat">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Hyderabad, India 🇮🇳</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state (shown before post selected) -->
       <div class="blog-empty-state" id="blogEmptyState">
         <div class="empty-icon">
-          <svg width="64" height="64" fill="none" stroke="#00ff88" stroke-width="1" viewBox="0 0 24 24" opacity="0.3"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg width="56" height="56" fill="none" stroke="#00ff88" stroke-width="0.8" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
         </div>
-        <p>Select a post to read</p>
-        <span>root@kali:~/blog$<span class="cursor-blink"> _</span></span>
+        <p>Select a post from the left</p>
+        <span style="font-size:12px;opacity:0.5">root@kali:~/blog$ <span class="cursor-blink">_</span></span>
       </div>
-      <article class="blog-article" id="blogArticle" style="display:none">
+
+      <!-- Article content (hidden until post selected) -->
+      <article class="blog-article" id="blogArticle" style="display:none;">
         <div class="article-header" id="articleHeader"></div>
         <div class="article-body" id="articleBody"></div>
       </article>
+
     </div>
   </main>
 
@@ -99,17 +148,19 @@
     </div>
     <div class="ee-body" id="eeBody">
       <div class="ee-history" id="eeHistory">
-        <p><span style="color:#00ff88">nullspec7or@kali</span><span style="color:#fff">:</span><span style="color:#4d9eff">~/blog</span><span style="color:#fff">$ </span><span>ls -la posts/</span></p>
-        <p style="color:#ccc">Loading blog posts...</p>
+        <p><span style="color:#00ff88">nullspec7or@kali</span>:<span style="color:#4d9eff">~/blog</span>$ ls -la posts/</p>
+        <p style="color:#9ec;padding-left:12px">Loading posts...</p>
       </div>
       <div class="ee-input-row">
-        <span style="color:#00ff88">nullspec7or@kali</span><span style="color:#fff">:</span><span style="color:#4d9eff">~/blog</span><span style="color:#fff">$ </span>
+        <span style="color:#00ff88">nullspec7or@kali</span>:<span style="color:#4d9eff">~/blog</span>$&nbsp;
         <input type="text" id="eeInput" class="ee-input" placeholder="enter command..." autocomplete="off" spellcheck="false"/>
       </div>
     </div>
   </div>
-  <button class="ee-trigger" id="eeTrigger" title="Open Terminal">
-    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+  <button class="ee-trigger" id="eeTrigger" title="Open Terminal [~]">
+    <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+      <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+    </svg>
   </button>
 
   <script src="script.js"></script>
