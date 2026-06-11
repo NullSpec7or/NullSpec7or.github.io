@@ -325,10 +325,11 @@ function initGlobalBg() {
 /* ---- BOOT LOADER ---- */
 function initBoot() {
   const loader = document.getElementById('bootLoader');
-  if (!loader) return;
   const term = document.getElementById('bootTerminal');
   const bar = document.getElementById('bootBar');
-  if (!term || !bar) { loader.classList.add('hidden'); return; }
+  const heroName = document.getElementById('heroName');
+
+  if (!loader || !term || !bar) return;
 
   const lines = [
     '> Initializing NullSpec7or OS...',
@@ -337,20 +338,41 @@ function initBoot() {
     '> Checking BloodHound paths... [OK]',
     '> Scanning attack surface... [OK]',
     '> OSCP prep: 73% complete',
+    '> User identified: Rupesh Kumar', // Added explicit user ID
     '> Spawning shell... root@nullspec7or:~#',
   ];
-  let i=0, w=0;
+
+  let i = 0;
   const addLine = () => {
-    if(i>=lines.length){ setTimeout(()=>loader.classList.add('hidden'),600); return; }
-    const p=document.createElement('p');
-    p.textContent=lines[i++];
+    if (i >= lines.length) {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        if (heroName) {
+            heroName.textContent = 'Rupesh Kumar'; // Explicitly set name
+            heroName.style.opacity = '1';
+        }
+      }, 600);
+      return;
+    }
+    const p = document.createElement('p');
+    p.textContent = lines[i++];
     term.appendChild(p);
-    term.scrollTop=term.scrollHeight;
-    w=Math.min(100,(i/lines.length)*100);
-    bar.style.width=w+'%';
-    setTimeout(addLine, 200+Math.random()*200);
+    term.scrollTop = term.scrollHeight;
+    bar.style.width = Math.min(100, (i / lines.length) * 100) + '%';
+    setTimeout(addLine, 150 + Math.random() * 150);
   };
-  setTimeout(addLine,300);
+  setTimeout(addLine, 300);
+}
+
+/* ---- UI CORRECTION: Ensure Section Backgrounds ---- */
+// Call this to ensure all main sections have a solid background
+function initSectionBackdrops() {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(sec => {
+        sec.style.backgroundColor = '#060a0c'; // Solid color to block canvas bleed
+        sec.style.position = 'relative';
+        sec.style.zIndex = '2';
+    });
 }
 
 /* ---- CURSOR ---- */
@@ -884,13 +906,23 @@ function initIndexOgMeta(){
   twImg.content=svg;
 }
 
+function initSectionBackdrops() {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(sec => {
+        sec.style.backgroundColor = '#060a0c'; // Solid color to block canvas bleed
+        sec.style.position = 'relative';
+        sec.style.zIndex = '2';
+    });
+}
+
 /* ---- INIT ---- */
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initBoot();
   initNav();
   initScrollProgress();
   initGlobalBg();
+  initSectionBackdrops(); // Added fix for text readability
   initTypewriter();
   initCounters();
   initReveals();
@@ -898,7 +930,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   initCarousel();
   initEasterEgg();
 
-  if(!document.body.classList.contains('blog-page')){
+  if (!document.body.classList.contains('blog-page')) {
     initBlogTicker();
     initIndexOgMeta();
   } else {
