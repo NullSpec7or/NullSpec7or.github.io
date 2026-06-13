@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <!-- Custom Cursor -->
@@ -44,8 +45,8 @@
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" data-text="ABOUT">ABOUT</a></li>
-      <li><a href="#experience" data-text="EXPERIENCE">EXPERIENCE</a></li>
-      <li><a href="#projects" data-text="PROJECTS">PROJECTS</a></li>
+      <li><a href="experience.html" data-text="EXPERIENCE">EXPERIENCE</a></li>
+      <li><a href="projects.html" data-text="PROJECTS">PROJECTS</a></li>
       <li><a href="#achievements" data-text="ACHIEVEMENTS">ACHIEVEMENTS</a></li>
       <li><a href="#contact" data-text="CONTACT">CONTACT</a></li>
       <li><a href="blog.html" data-text="BLOG" class="nav-blog">BLOG</a></li>
@@ -106,67 +107,13 @@
       <h2 class="section-title reveal-up">Who Am I</h2>
       <div class="about-grid">
         <div class="about-text reveal-left">
-          <p class="about-bio">
-            Offensive security engineer with a passion for breaking systems before attackers do. Specializing in <span class="highlight">Active Directory attacks</span>, <span class="highlight">web application exploitation</span>, and <span class="highlight">exploit development</span> — combining technical depth with real-world red team methodology.
-          </p>
-          <p class="about-bio">
-            Currently grinding toward <span class="highlight">OSCP</span>, building custom tooling, and documenting the journey through CTFs and HackTheBox labs. Based in <span class="highlight">Hyderabad, India</span> 🇮🇳 — where the tea is strong and the shells are root.
-          </p>
-          <div class="about-details">
-            <div class="detail-item">
-              <span class="detail-key">Location</span>
-              <span class="detail-val">Hyderabad, Telangana, India</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-key">Focus</span>
-              <span class="detail-val">Offensive Security / Red Team</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-key">Certification</span>
-              <span class="detail-val">OSCP (In Progress)</span>
-            </div>
-          </div>
+          <p class="about-bio" id="aboutBio">Loading...</p>
+          <div class="about-details" id="aboutDetails"></div>
         </div>
         <div class="about-skills reveal-right">
           <h3 class="skills-heading">Technical Arsenal</h3>
-          <div class="skills-list">
-            <div class="skill-item" data-level="90">
-              <div class="skill-header"><span class="skill-name">Active Directory Attacks</span><span class="skill-pct">90%</span></div>
-              <div class="skill-bar"><div class="skill-fill" data-w="90"></div></div>
-            </div>
-            <div class="skill-item" data-level="85">
-              <div class="skill-header"><span class="skill-name">Web Application Pentesting</span><span class="skill-pct">85%</span></div>
-              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
-            </div>
-            <div class="skill-item" data-level="80">
-              <div class="skill-header"><span class="skill-name">Network Penetration Testing</span><span class="skill-pct">80%</span></div>
-              <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
-            </div>
-            <div class="skill-item" data-level="75">
-              <div class="skill-header"><span class="skill-name">Exploit Development</span><span class="skill-pct">75%</span></div>
-              <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
-            </div>
-            <div class="skill-item" data-level="85">
-              <div class="skill-header"><span class="skill-name">SIEM / Blue Team (Wazuh)</span><span class="skill-pct">85%</span></div>
-              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
-            </div>
-            <div class="skill-item" data-level="70">
-              <div class="skill-header"><span class="skill-name">Cloud Security (AWS)</span><span class="skill-pct">70%</span></div>
-              <div class="skill-bar"><div class="skill-fill" data-w="70"></div></div>
-            </div>
-          </div>
-          <div class="tech-tags">
-            <span class="tag">Kali Linux</span>
-            <span class="tag">Metasploit</span>
-            <span class="tag">BloodHound</span>
-            <span class="tag">Impacket</span>
-            <span class="tag">Burp Suite</span>
-            <span class="tag">PowerView</span>
-            <span class="tag">CrackMapExec</span>
-            <span class="tag">Nmap</span>
-            <span class="tag">Python</span>
-            <span class="tag">Bash</span>
-          </div>
+          <div class="skills-list" id="aboutSkills"></div>
+          <div class="tech-tags" id="aboutTechTags"></div>
         </div>
       </div>
     </div>
@@ -177,54 +124,11 @@
     <div class="container">
       <div class="section-label">02 / EXPERIENCE</div>
       <h2 class="section-title reveal-up">Battle-Tested</h2>
-      <div class="timeline">
+      <div class="timeline" id="experienceTimeline">
         <div class="timeline-line"></div>
-
-        <div class="timeline-item reveal-timeline" data-side="left">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="tcard-header">
-              <span class="tcard-date">2023 – Present</span>
-              <span class="tcard-badge">Current</span>
-            </div>
-            <h3 class="tcard-title">Cybersecurity Analyst</h3>
-            <p class="tcard-company">// Confidential Client · Hyderabad</p>
-            <p class="tcard-desc">Conducting internal network penetration tests, Active Directory security assessments, and implementing SIEM solutions on AWS infrastructure using Wazuh.</p>
-            <div class="tcard-tags">
-              <span>AD Pentesting</span><span>Wazuh</span><span>AWS</span><span>Red Team</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item reveal-timeline" data-side="right">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="tcard-header">
-              <span class="tcard-date">2022 – 2023</span>
-            </div>
-            <h3 class="tcard-title">Security Researcher</h3>
-            <p class="tcard-company">// Independent · CTF & Bug Bounty</p>
-            <p class="tcard-desc">Competing in CTF competitions and bug bounty programs. Focus on web application vulnerabilities, SSRF, SQLi, and privilege escalation chains on HackTheBox Pro Labs.</p>
-            <div class="tcard-tags">
-              <span>CTF</span><span>Bug Bounty</span><span>HackTheBox</span><span>Web Sec</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="timeline-item reveal-timeline" data-side="left">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="tcard-header">
-              <span class="tcard-date">2021 – 2022</span>
-            </div>
-            <h3 class="tcard-title">Security Intern</h3>
-            <p class="tcard-company">// Security Firm · Hyderabad</p>
-            <p class="tcard-desc">Assisted in vulnerability assessments, VAPT reporting, and setting up security monitoring infrastructure for enterprise clients across banking and finance verticals.</p>
-            <div class="tcard-tags">
-              <span>VAPT</span><span>Nessus</span><span>Reporting</span><span>SOC</span>
-            </div>
-          </div>
-        </div>
+      </div>
+      <div class="view-all-wrap" id="experienceViewAll" style="display:none;">
+        <a href="experience.html" target="_blank" class="view-all-link">See full list of experience →</a>
       </div>
     </div>
   </section>
@@ -234,112 +138,10 @@
     <div class="container">
       <div class="section-label">03 / PROJECTS</div>
       <h2 class="section-title reveal-up">Arsenal</h2>
-      <div class="projects-grid">
-
-        <div class="project-card reveal-card">
-          <div class="project-glow"></div>
-          <div class="project-header">
-            <div class="project-icon">
-              <svg width="28" height="28" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="project-links">
-              <a href="#" class="project-link" title="GitHub">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3 class="project-title">AD-Pwner</h3>
-          <p class="project-desc">Automated Active Directory enumeration and attack framework combining BloodHound, PowerView, and Impacket into a single streamlined workflow for assumed-breach scenarios.</p>
-          <div class="project-tags">
-            <span>Active Directory</span><span>Python</span><span>Red Team</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal-card">
-          <div class="project-glow"></div>
-          <div class="project-header">
-            <div class="project-icon">
-              <svg width="28" height="28" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            </div>
-            <div class="project-links">
-              <a href="#" class="project-link" title="GitHub">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3 class="project-title">Wazuh AWS Architect</h3>
-          <p class="project-desc">Production-grade Wazuh SIEM deployment on AWS with 90-day block-based archival on S3, SNS alerting, EBS snapshot automation, and post-upload checksum verification.</p>
-          <div class="project-tags">
-            <span>Wazuh</span><span>AWS</span><span>SIEM</span><span>Blue Team</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal-card">
-          <div class="project-glow"></div>
-          <div class="project-header">
-            <div class="project-icon">
-              <svg width="28" height="28" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="project-links">
-              <a href="#" class="project-link" title="GitHub">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3 class="project-title">CVE-2024-51482 PoC</h3>
-          <p class="project-desc">Proof-of-concept exploit and full write-up for ZoneMinder authentication bypass via path traversal (cctv.htb). Includes detection rules for Wazuh and remediation guidance.</p>
-          <div class="project-tags">
-            <span>Exploit Dev</span><span>CVE</span><span>Web Security</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal-card">
-          <div class="project-glow"></div>
-          <div class="project-header">
-            <div class="project-icon">
-              <svg width="28" height="28" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <div class="project-links">
-              <a href="#" class="project-link" title="GitHub">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              </a>
-            </div>
-          </div>
-          <h3 class="project-title">SQLi Toolkit</h3>
-          <p class="project-desc">Manual SQL injection testing methodology and toolkit covering error-based, blind boolean, time-based, and UNION-based techniques — built for OSCP methodology compliance without automated tools.</p>
-          <div class="project-tags">
-            <span>SQL Injection</span><span>Web Sec</span><span>OSCP</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal-card">
-          <div class="project-glow"></div>
-          <div class="project-header">
-            <div class="project-icon">
-              <svg width="28" height="28" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            </div>
-          </div>
-          <h3 class="project-title">HTB Write-up Vault</h3>
-          <p class="project-desc">Structured repository of HackTheBox machine write-ups focusing on methodology over tooling. Covers Windows/Linux privilege escalation, AD exploitation, and web attack chains.</p>
-          <div class="project-tags">
-            <span>HTB</span><span>Write-ups</span><span>Methodology</span>
-          </div>
-        </div>
-
-        <div class="project-card reveal-card">
-          <div class="project-glow"></div>
-          <div class="project-header">
-            <div class="project-icon">
-              <svg width="28" height="28" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-          </div>
-          <h3 class="project-title">Threat Intel Aggregator</h3>
-          <p class="project-desc">Python-based OSINT tool that aggregates threat intelligence feeds, correlates IOCs, and formats reports for Wazuh rule creation — bridging red and blue team perspectives.</p>
-          <div class="project-tags">
-            <span>OSINT</span><span>Python</span><span>Threat Intel</span>
-          </div>
-        </div>
-
+      <div class="projects-grid" id="projectsGrid">
+      </div>
+      <div class="view-all-wrap" id="projectsViewAll" style="display:none;">
+        <a href="projects.html" target="_blank" class="view-all-link">See full list of projects →</a>
       </div>
     </div>
   </section>
@@ -351,67 +153,6 @@
       <h2 class="section-title reveal-up">Flags Captured</h2>
       <div class="achievements-carousel-wrap">
         <div class="achievements-carousel" id="achievementsCarousel">
-
-          <div class="achievement-slide">
-            <div class="ach-icon">
-              <svg width="40" height="40" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M17 12h.01M12 7h.01M7 12h.01"/><rect x="3" y="3" width="18" height="14" rx="2"/></svg>
-            </div>
-            <div class="ach-content">
-              <span class="ach-year">2024</span>
-              <h3>OSCP Candidate</h3>
-              <p>Currently preparing for OSCP certification — completing 50+ HackTheBox and PG Practice machines with full manual exploitation methodology.</p>
-              <span class="ach-badge">OffSec</span>
-            </div>
-          </div>
-
-          <div class="achievement-slide">
-            <div class="ach-icon">
-              <svg width="40" height="40" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            </div>
-            <div class="ach-content">
-              <span class="ach-year">2023</span>
-              <h3>HTB Pro Hacker Rank</h3>
-              <p>Achieved Pro Hacker rank on HackTheBox platform, completing multiple Active Directory Pro Labs including Offshore and RastaLabs.</p>
-              <span class="ach-badge">HackTheBox</span>
-            </div>
-          </div>
-
-          <div class="achievement-slide">
-            <div class="ach-icon">
-              <svg width="40" height="40" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="ach-content">
-              <span class="ach-year">2023</span>
-              <h3>Wazuh SIEM Architecture Design</h3>
-              <p>Designed and deployed production-grade Wazuh SIEM on AWS with 90-day retention, block-based archival, and full SNS alerting — adopted by enterprise client.</p>
-              <span class="ach-badge">AWS · Blue Team</span>
-            </div>
-          </div>
-
-          <div class="achievement-slide">
-            <div class="ach-icon">
-              <svg width="40" height="40" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
-            </div>
-            <div class="ach-content">
-              <span class="ach-year">2022</span>
-              <h3>National CTF Top 10</h3>
-              <p>Placed in Top 10 at a national-level Capture The Flag competition, excelling in web exploitation, reverse engineering, and forensics challenges.</p>
-              <span class="ach-badge">CTF</span>
-            </div>
-          </div>
-
-          <div class="achievement-slide">
-            <div class="ach-icon">
-              <svg width="40" height="40" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-            <div class="ach-content">
-              <span class="ach-year">2022</span>
-              <h3>CVE Research Publication</h3>
-              <p>Analyzed and documented 15+ CVEs with technical write-ups, including ZoneMinder CVE-2024-51482 path traversal with full PoC and detection signatures.</p>
-              <span class="ach-badge">Research</span>
-            </div>
-          </div>
-
         </div>
         <div class="carousel-controls">
           <button class="carousel-btn" id="achPrev" aria-label="Previous">
@@ -499,35 +240,8 @@
       <h2 class="section-title reveal-up">Initiate Contact</h2>
       <div class="contact-grid">
         <div class="contact-left reveal-left">
-          <p class="contact-intro">Looking to work together on a red team engagement, security audit, or just want to talk about the latest CVE? Reach out.</p>
-          <div class="contact-info">
-            <a href="mailto:nullspec7or@gmail.com" class="contact-item">
-              <div class="contact-icon">
-                <svg width="20" height="20" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </div>
-              <div>
-                <span class="contact-label">Email</span>
-                <span class="contact-value">nullspec7or@gmail.com</span>
-              </div>
-            </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="contact-item">
-              <div class="contact-icon">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              </div>
-              <div>
-                <span class="contact-label">GitHub</span>
-                <span class="contact-value">github.com/nullspec7or</span>
-              </div>
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-item">
-              <div class="contact-icon">
-                <svg width="20" height="20" fill="#00ff88" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              </div>
-              <div>
-                <span class="contact-label">LinkedIn</span>
-                <span class="contact-value">linkedin.com/in/nullspec7or</span>
-              </div>
-            </a>
+          <p class="contact-intro" id="contactIntro">Loading...</p>
+          <div class="contact-info" id="contactInfo">
           </div>
         </div>
         <div class="contact-right reveal-right">
