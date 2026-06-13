@@ -27,15 +27,40 @@ function parseFrontmatter(fmText) {
     return meta;
 }
 
+// ============================================================
+// UNIVERSAL MARKDOWN PARSER FOR DATA FILES (FIXED)
+// ============================================================
 function parseBlocks(raw) {
-    const normalized = raw.replace(/\r\n/g, '\n');
-    const blocks = normalized.split(/\n---\n/).map(b => b.trim()).filter(Boolean);
-    return blocks.map(block => {
-        const fmMatch = block.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
-        let meta = {}, content = block;
-        if (fmMatch) { meta = parseFrontmatter(fmMatch[1]); content = fmMatch[2].trim(); }
-        return { meta, content };
+  const normalized = raw.replace(/\r\n/g, '\n').trim();
+  if (!normalized.startsWith('---')) {
+    return [{ meta: {}, content: normalized }];
+  }
+  
+  // Remove the first '---\n'
+  const withoutFirst = normalized.replace(/^---\r?\n/, '');
+  
+  // Split by '\n---\n' to alternate between frontmatter and content
+  const parts = withoutFirst.split(/\n---\n/);
+  const blocks = [];
+  
+  for (let i = 0; i < parts.length; i += 2) {
+    const fmText = parts[i].trim();
+    const content = parts[i + 1] ? parts[i + 1].trim() : '';
+    const meta = {};
+    
+    fmText.split(/\r?\n/).forEach(line => {
+      const sep = line.indexOf(':');
+      if (sep < 0) return;
+      const key = line.slice(0, sep).trim();
+      let val = line.slice(sep + 1).trim();
+      if (val.startsWith('[') && val.endsWith(']')) {
+        val = val.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+      }
+      meta[key] = val;
     });
+    blocks.push({ meta, content });
+  }
+  return blocks;
 }
 
 const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : esc(text).replace(/\n/g, '<br>');
@@ -330,20 +355,20 @@ window.initScrollReveal();
     }
   }
 
-  function parseFM(raw) {
-    const m = raw.match(/^---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*\r?\n?([\s\S]*)$/);
-    if (!m) return { meta: {}, content: raw };
-    const meta = {};
-    m[1].split(/\r?\n/).forEach(line => {
-      const sep = line.indexOf(':'); if (sep < 0) return;
-      const key = line.slice(0, sep).trim(); let val = line.slice(sep + 1).trim();
-      if (val.startsWith('[') && val.endsWith(']')) {
-        val = val.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
-      }
-      meta[key] = val;
-    });
-    return { meta, content: m[2] };
-  }
+function parseFM(raw) {
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  if (!m) return { meta: {}, content: raw };
+  const meta = {};
+  m[1].split(/\r?\n/).forEach(line => {
+    const sep = line.indexOf(':'); if (sep < 0) return;
+    const key = line.slice(0, sep).trim(); let val = line.slice(sep + 1).trim();
+    if (val.startsWith('[') && val.endsWith(']')) {
+      val = val.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+    }
+    meta[key] = val;
+  });
+  return { meta, content: m[2] };
+}
 
   function calcReadTime(text) {
     const words = text.trim().split(/\s+/).length;

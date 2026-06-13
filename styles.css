@@ -545,3 +545,118 @@ body.blog-page { background:#060a0c; }
   margin-bottom: 32px;
   border: 1px solid var(--border2);
 }
+.article-readtime {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: 0.02em;
+  margin-top: 8px;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid var(--border2);
+  transition: all 0.3s ease;
+}
+
+.article-readtime:hover {
+  background: rgba(0, 255, 136, 0.15);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+  transform: translateY(-1px);
+}
+/* ============================================================
+   DIVINE INVOCATION (Top Center Banner)
+   ============================================================ */
+.divine-top-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 10, 12, 0.95);
+  border-bottom: 1px solid rgba(255, 153, 51, 0.25);
+  z-index: 1001; /* Sits above the navigation */
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+
+/* Sweeping light ray effect across the banner */
+.divine-top-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.12), transparent);
+  animation: blessing-sweep 6s infinite linear;
+}
+
+/* The glowing text itself */
+.divine-text {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFB347;
+  text-shadow: 
+    0 0 5px rgba(255, 153, 51, 0.8),
+    0 0 10px rgba(255, 153, 51, 0.5),
+    0 0 15px rgba(255, 107, 53, 0.3);
+  animation: divine-glow 3s ease-in-out infinite alternate;
+  letter-spacing: 0.15em;
+  position: relative;
+  z-index: 1;
+  cursor: default;
+  transition: transform 0.3s ease;
+}
+
+/* Speeds up glow and scales slightly on hover */
+.divine-text:hover {
+  transform: scale(1.05);
+  animation-duration: 0.8s;
+}
+
+/* Push the navigation bar down so it sits perfectly below the banner */
+.nav {
+  top: 38px;
+}
+
+/* Adjust scroll progress bar to sit right below the banner */
+.scroll-progress {
+  top: 38px;
+}
+
+/* Adjust mobile nav dropdown menu to start below the banner + nav */
+@media(max-width:900px){
+  .nav-links {
+    top: 102px; /* 38px banner + 64px nav */
+  }
+}
+
+/* Keyframes for animations */
+@keyframes blessing-sweep {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes divine-glow {
+  0% {
+    color: #FF9933;
+    text-shadow: 
+      0 0 5px rgba(255, 153, 51, 0.8),
+      0 0 10px rgba(255, 153, 51, 0.6),
+      0 0 20px rgba(255, 107, 53, 0.4);
+    transform: scale(1);
+  }
+  100% {
+    color: #FFD700;
+    text-shadow: 
+      0 0 8px rgba(255, 215, 0, 0.9),
+      0 0 16px rgba(255, 153, 51, 0.8),
+      0 0 30px rgba(255, 107, 53, 0.6),
+      0 0 45px rgba(255, 215, 0, 0.3);
+    transform: scale(1.02);
+  }
+}
