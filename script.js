@@ -31,10 +31,12 @@ function parseFrontmatter(fmText) {
 // UNIVERSAL MARKDOWN PARSER FOR DATA FILES (FIXED)
 // ============================================================
 function parseBlocks(raw) {
+  if (!raw || typeof raw !== 'string') return [];
   const normalized = raw.replace(/\r\n/g, '\n').trim();
   if (!normalized.startsWith('---')) {
     return [{ meta: {}, content: normalized }];
   }
+  
   const withoutFirst = normalized.replace(/^---\r?\n/, '');
   const parts = withoutFirst.split(/\n---\n/);
   const blocks = [];
@@ -43,6 +45,7 @@ function parseBlocks(raw) {
     const fmText = parts[i].trim();
     const content = parts[i + 1] ? parts[i + 1].trim() : '';
     const meta = {};
+    
     fmText.split(/\r?\n/).forEach(line => {
       const sep = line.indexOf(':');
       if (sep < 0) return;
@@ -351,7 +354,7 @@ window.initScrollReveal();
   }
 
 function parseFM(raw) {
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/); // Fixed regex
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
   if (!m) return { meta: {}, content: raw };
   const meta = {};
   m[1].split(/\r?\n/).forEach(line => {
@@ -589,11 +592,11 @@ function parseFM(raw) {
         fetch('data/experience.md').then(r => r.text()).then(raw => {
             let blocks = parseBlocks(raw);
             
-            // --- NEW: Sort blocks by date, newest first ---
+            // Sort blocks by date, newest first
             blocks.sort((a, b) => {
                 const dateA = new Date(a.meta.date || 0);
                 const dateB = new Date(b.meta.date || 0);
-                return dateB - dateA; // Newest at top, oldest at bottom
+                return dateB - dateA; 
             });
             
             const isArchive = document.body.classList.contains('archive-page');
@@ -627,7 +630,7 @@ function parseFM(raw) {
             }
 
             if (expContainerFull) {
-                // --- NEW: Populate Timeline Sidebar ---
+                // 1. Populate Timeline Sidebar
                 const sidebar = document.getElementById('expTimelineSidebar');
                 if (sidebar) {
                     sidebar.innerHTML = blocks.map(b => {
@@ -652,7 +655,7 @@ function parseFM(raw) {
                     });
                 }
 
-                // Trapezium Nav
+                // 2. Populate Trapezium Nav
                 const navContainer = document.getElementById('expStickyNav');
                 if (navContainer) {
                     navContainer.innerHTML = blocks.map(b => {
@@ -663,7 +666,7 @@ function parseFM(raw) {
                     }).join('');
                 }
 
-                // Render Cards
+                // 3. Render Main Cards
                 expContainerFull.innerHTML = '';
                 blocks.forEach(block => {
                     const m = block.meta;
@@ -688,7 +691,7 @@ function parseFM(raw) {
                     expContainerFull.appendChild(card);
                 });
                 
-                // --- UPDATED: Live Tracker for BOTH Sidebar and Trapezium Nav ---
+                // 4. Live Tracker for BOTH Sidebar and Nav
                 setTimeout(() => {
                     const navItems = document.querySelectorAll('.exp-nav-item');
                     const timelineItems = document.querySelectorAll('.timeline-item');
@@ -708,5 +711,5 @@ function parseFM(raw) {
                     }
                 }, 100);
             }
-        }).catch(() => {});
+        }).catch(err => console.error("Failed to load experience:", err));
     }
