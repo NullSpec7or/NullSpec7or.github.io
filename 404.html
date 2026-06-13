@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — nullspec7or</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #030712; --cyan: #00d4ff; --magenta: #ff006e;
+      --green: #00ff88; --text: #e2e8f0; --text-dim: #94a3b8; --text-faint: #475569;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--void); color: var(--text); font-family: var(--mono);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .container {
+      position: relative; z-index: 1;
+      text-align: center; padding: 40px;
+      max-width: 600px;
+    }
+    .error-code {
+      font-size: clamp(80px, 15vw, 140px);
+      font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--cyan), var(--magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      animation: flicker 4s infinite;
+    }
+    @keyframes flicker {
+      0%,19%,21%,23%,25%,54%,56%,100% { opacity: 1; }
+      20%,24%,55% { opacity: 0.5; }
+    }
+    .error-label {
+      font-size: 13px; color: var(--magenta); letter-spacing: 4px;
+      text-transform: uppercase; margin-bottom: 32px;
+    }
+    .terminal-block {
+      background: rgba(13,20,36,0.8); border: 1px solid rgba(0,212,255,0.15);
+      border-radius: 6px; padding: 20px 24px;
+      text-align: left; margin-bottom: 32px; font-size: 13px; line-height: 1.8;
+    }
+    .p { color: var(--cyan); } .e { color: var(--magenta); }
+    .g { color: var(--green); } .d { color: var(--text-faint); }
+    .btn {
+      display: inline-block; font-family: var(--mono); font-size: 13px;
+      padding: 12px 28px; background: var(--cyan); color: var(--void);
+      border: none; border-radius: 3px; font-weight: 700; cursor: pointer;
+      letter-spacing: 1px; text-decoration: none;
+      box-shadow: 0 0 24px rgba(0,212,255,0.3);
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #33ddff; box-shadow: 0 0 40px rgba(0,212,255,0.5); }
+  </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="container">
+  <div class="error-code">404</div>
+  <div class="error-label">// Page Not Found</div>
+  <div class="terminal-block">
+    <div><span class="p">nullspec7or@kali</span>:~$ curl -I <span class="e">this_url</span></div>
+    <div><span class="e">HTTP/1.1 404 Not Found</span></div>
+    <div><span class="d">X-Error: Target resource does not exist</span></div>
+    <div><span class="d">X-Suggestion: Check your recon before hitting endpoints</span></div>
+    <div style="margin-top:8px"><span class="p">nullspec7or@kali</span>:~$ <span class="g">cd ~</span></div>
+  </div>
+  <a href="/" class="btn">Return to Home</a>
+</div>
+<script>
+const c = document.getElementById('c'), ctx = c.getContext('2d');
+let W, H, particles = [];
+function init() {
+  W = c.width = window.innerWidth; H = c.height = window.innerHeight;
+  particles = Array.from({length: 50}, () => ({
+    x: Math.random()*W, y: Math.random()*H,
+    vx: (Math.random()-.5)*.4, vy: (Math.random()-.5)*.4,
+    r: Math.random()*1.5+.5, a: Math.random()*.4+.1
+  }));
+}
+function draw() {
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x<0||p.x>W) p.vx*=-1;
+    if (p.y<0||p.y>H) p.vy*=-1;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(0,212,255,${p.a})`; ctx.fill();
+  });
+  requestAnimationFrame(draw);
+}
+init(); draw();
+window.addEventListener('resize', init);
+</script>
+</body>
+</html>

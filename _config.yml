@@ -1,0 +1,22 @@
+# GitHub Pages Configuration
+# This site is served from the root of the repository
+
+theme: null
+plugins: []
+
+# Exclude files not needed in deployment
+exclude:
+  - assets/images/generate-og.html
+  - README.md
+  - "*.sh"
+
+# Allow serving all files including .md data files
+include:
+  - data/portfolio.md
+  - blog/posts/
+
+# Encoding
+encoding: utf-8
+
+# Safe mode off (allow custom plugins if ever added)
+safe: false
