@@ -1,3 +1,4 @@
+
 ---
 title: Enterprise AppSec & CI/CD Automation
 description: Automated AppSec testing pipeline integrating Jenkins, Qualys WAS, and SAST/SCA tools (Blackduck Polaris Coverity) to enforce security gates in CI/CD workflows and streamline vulnerability remediation.
