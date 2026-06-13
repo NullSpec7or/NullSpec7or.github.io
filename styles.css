@@ -521,3 +521,27 @@ body.blog-page { background:#060a0c; }
   .easter-egg{bottom:88px;right:14px;left:14px;width:auto}
   .bch-stats{flex-wrap:wrap;gap:12px}
 }
+/* Fix Blog Readability */
+.bch-sub, .bch-stats, .bch-stat {
+  font-size: 14px;
+  color: rgba(240,246,255,0.85);
+}
+
+.bch-stats {
+  gap: 32px;
+}
+
+.bch-stat svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Blog Post Cover Image */
+.blog-cover-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: var(--radius2);
+  margin-bottom: 32px;
+  border: 1px solid var(--border2);
+}

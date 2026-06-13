@@ -1,6 +1,6 @@
 ---
 title: "HackTheBox CCTV: Full Walkthrough"
-date: 2024-10-08
+date: 2026-04-08
 tags: [HTB, Web Security, Privilege Escalation]
 thumbnail:
 ---

@@ -16,16 +16,22 @@
   <div class="scroll-progress" id="scrollProgress"></div>
   
   <nav class="nav" id="mainNav">
-    <div class="nav-logo"><svg width="36" height="36" viewBox="0 0 60 60" fill="none"><polygon points="30,2 58,18 58,42 30,58 2,42 2,18" stroke="#00ff88" stroke-width="1.5" fill="none"/><text x="30" y="35" text-anchor="middle" fill="#00ff88" font-family="Share Tech Mono" font-size="14">RK</text></svg><span>nullspec7or</span></div>
+    <div class="nav-logo">
+      <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
+        <polygon points="30,2 58,18 58,42 30,58 2,42 2,18" stroke="#00ff88" stroke-width="1.5" fill="none"/>
+        <text x="30" y="35" text-anchor="middle" fill="#00ff88" font-family="Share Tech Mono" font-size="14">RK</text>
+      </svg>
+      <span>nullspec7or</span>
+    </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html#about">ABOUT</a></li>
-      <li><a href="index.html#achievements">ACHIEVEMENTS</a></li>
-      <li><a href="experience.html">EXPERIENCE</a></li>
-      <li><a href="projects.html">PROJECTS</a></li>
-      <li><a href="index.html#contact">CONTACT</a></li>
-      <li><a href="blog.html" class="nav-blog">BLOG</a></li>
+      <li><a href="index.html#about" data-text="ABOUT">ABOUT</a></li>
+      <li><a href="index.html#achievements" data-text="ACHIEVEMENTS">ACHIEVEMENTS</a></li>
+      <li><a href="experience.html" data-text="EXPERIENCE">EXPERIENCE</a></li>
+      <li><a href="projects.html" data-text="PROJECTS">PROJECTS</a></li>
+      <li><a href="index.html#contact" data-text="CONTACT">CONTACT</a></li>
+      <li><a href="blog.html" data-text="BLOG" class="nav-blog">BLOG</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </nav>
 
   <section class="section archive-section">
@@ -44,7 +50,9 @@
 
   <footer class="footer">
     <div class="container">
-      <div class="footer-bottom"><span class="footer-copy">© 2026 Rupesh Kumar · Hyderabad, India 🇮🇳</span></div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Rupesh Kumar · Hyderabad, India 🇮🇳</span>
+      </div>
     </div>
   </footer>
   <script src="script.js"></script>

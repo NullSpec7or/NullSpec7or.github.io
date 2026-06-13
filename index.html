@@ -10,6 +10,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Open Graph / Social Media Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourusername.github.io/blog.html" />
+  <meta property="og:title" content="Null Spec7or's Blog | Offensive Security Intel" />
+  <meta property="og:description" content="Red team walkthroughs, CVE analysis, AD exploitation, OSCP prep, SIEM architecture" />
+  <meta property="og:image" content="images/blog-og-cover.jpg" />
+  <meta property="og:site_name" content="nullspec7or" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Null Spec7or's Blog" />
+  <meta name="twitter:description" content="Red team walkthroughs, CVE analysis, AD exploitation" />
+  <meta name="twitter:image" content="images/blog-og-cover.jpg" />
 </head>
 <body>
   <!-- Custom Cursor & Scroll Progress -->
@@ -81,7 +94,7 @@
     <div class="hero-scroll-hint"><span>SCROLL</span><div class="scroll-line"></div></div>
   </section>
 
-  <!-- 1. ABOUT (Fixed <p> nesting bug) -->
+  <!-- 1. ABOUT (Fixed <p> nesting bug)
   <section class="section about-section" id="about">
     <div class="container">
       <div class="section-label">01 / ABOUT</div>
@@ -89,12 +102,85 @@
       <div class="about-grid">
         <div class="about-text reveal-left">
           <div id="aboutBio"></div> <!-- Changed from <p> to <div> -->
-          <div class="about-details" id="aboutDetails"></div>
+          <!-- <div class="about-details" id="aboutDetails"></div>
         </div>
         <div class="about-skills reveal-right">
           <h3 class="skills-heading">Technical Arsenal</h3>
           <div class="skills-list" id="aboutSkills"></div>
           <div class="tech-tags" id="aboutTechTags"></div>
+        </div>
+      </div>
+    </div>
+  </section> --> 
+
+    <!-- 1. ABOUT -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="section-label">01 / ABOUT</div>
+      <h2 class="section-title reveal-up">Who Am I</h2>
+      <div class="about-grid">
+        <div class="about-text reveal-left">
+          <p class="about-bio">
+            Offensive security engineer with a passion for breaking systems before attackers do. Specializing in <span class="highlight">Active Directory attacks</span>, <span class="highlight">web application exploitation</span>, and <span class="highlight">exploit development</span> — combining technical depth with real-world red team methodology.
+          </p>
+          <p class="about-bio">
+            Currently grinding toward <span class="highlight">Offensive security across different environments</span>, building custom tooling, and documenting the journey through CTFs and HackTheBox labs. Based in <span class="highlight">Hyderabad, India</span> 🇮🇳 — where the tea is strong and the shells are root.
+          </p>
+          <div class="about-details">
+            <div class="detail-item">
+              <span class="detail-key">Location</span>
+              <span class="detail-val">Hyderabad, Telangana, India</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-key">Focus</span>
+              <span class="detail-val">Offensive Security / Red Team</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-key">Certification</span>
+              <span class="detail-val">OSCP (In Progress)</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-skills reveal-right">
+          <h3 class="skills-heading">Technical Arsenal</h3>
+          <div class="skills-list">
+            <div class="skill-item" data-level="90">
+              <div class="skill-header"><span class="skill-name">Active Directory Attacks</span><span class="skill-pct">90%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="90"></div></div>
+            </div>
+            <div class="skill-item" data-level="85">
+              <div class="skill-header"><span class="skill-name">Web Application Pentesting</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+            </div>
+            <div class="skill-item" data-level="80">
+              <div class="skill-header"><span class="skill-name">Network Penetration Testing</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="80"></div></div>
+            </div>
+            <div class="skill-item" data-level="75">
+              <div class="skill-header"><span class="skill-name">Exploit Development</span><span class="skill-pct">75%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="75"></div></div>
+            </div>
+            <div class="skill-item" data-level="85">
+              <div class="skill-header"><span class="skill-name">SIEM / Blue Team (Wazuh)</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="85"></div></div>
+            </div>
+            <div class="skill-item" data-level="70">
+              <div class="skill-header"><span class="skill-name">Cloud Security (AWS)</span><span class="skill-pct">70%</span></div>
+              <div class="skill-bar"><div class="skill-fill" data-w="70"></div></div>
+            </div>
+          </div>
+          <div class="tech-tags">
+            <span class="tag">Kali Linux</span>
+            <span class="tag">Metasploit</span>
+            <span class="tag">BloodHound</span>
+            <span class="tag">Impacket</span>
+            <span class="tag">Burp Suite</span>
+            <span class="tag">PowerView</span>
+            <span class="tag">CrackMapExec</span>
+            <span class="tag">Nmap</span>
+            <span class="tag">Python</span>
+            <span class="tag">Bash</span>
+          </div>
         </div>
       </div>
     </div>

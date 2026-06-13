@@ -19,3 +19,10 @@ tags: Active Directory, IAM, Pentesting
 github: 
 live: 
 ---
+---
+title: Affected CVE identifier for linux {Nill-Drik}
+description: An active CVE Identifier for linux packages from official CVE repositories which works on the version based matching packages leading to confident environment security posture management and security patching.
+tags: CVE, Linux, Vulnerabilities
+github: 
+live: 
+---

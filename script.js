@@ -1,5 +1,5 @@
 /* ============================================================
-   nullspec7or Portfolio — script.js  v3.0 (Fully Data-Driven)
+   nullspec7or Portfolio — script.js  v3.1 (Fully Cleaned & Fixed)
    Vanilla JS only — GitHub Pages ready
    ============================================================ */
 'use strict';
@@ -48,33 +48,22 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
   canvas.id = 'globalBg';
   canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;';
   document.body.insertBefore(canvas, document.body.firstChild);
-
   const ctx = canvas.getContext('2d');
   let W, H, particles = [];
   let mouse = { x: -999, y: -999 };
-  const NUM = 120;
-  const CONNECT = 160;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
+  const NUM = 120; const CONNECT = 160;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
   class Particle {
     constructor() { this.reset(true); }
     reset(init) {
-      this.x = Math.random() * W;
-      this.y = init ? Math.random() * H : (Math.random() > 0.5 ? -10 : H + 10);
-      this.vx = (Math.random() - 0.5) * 0.32;
-      this.vy = (Math.random() - 0.5) * 0.32;
-      this.r = Math.random() * 1.6 + 0.5;
-      this.alpha = Math.random() * 0.4 + 0.15;
+      this.x = Math.random() * W; this.y = init ? Math.random() * H : (Math.random() > 0.5 ? -10 : H + 10);
+      this.vx = (Math.random() - 0.5) * 0.32; this.vy = (Math.random() - 0.5) * 0.32;
+      this.r = Math.random() * 1.6 + 0.5; this.alpha = Math.random() * 0.4 + 0.15;
       this.color = Math.random() < 0.13 ? [255, 107, 53] : [0, 255, 136];
     }
     update() {
       this.x += this.vx; this.y += this.vy;
-      const dx = this.x - mouse.x, dy = this.y - mouse.y;
-      const d = Math.sqrt(dx * dx + dy * dy);
+      const dx = this.x - mouse.x, dy = this.y - mouse.y; const d = Math.sqrt(dx * dx + dy * dy);
       if (d < 110 && d > 0) { const f = (110 - d) / 110; this.x += dx / d * f * 2.2; this.y += dy / d * f * 2.2; }
       if (this.x < -15 || this.x > W + 15 || this.y < -15 || this.y > H + 15) this.reset(false);
     }
@@ -84,26 +73,16 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
       ctx.fillStyle = `rgba(${r},${g},${b},${this.alpha})`; ctx.fill();
     }
   }
-
   function drawGrid() {
     ctx.lineWidth = 0.5;
-    for (let x = 0; x <= W; x += 80) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H);
-      ctx.strokeStyle = 'rgba(0,255,136,0.022)'; ctx.stroke();
-    }
-    for (let y = 0; y <= H; y += 80) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y);
-      ctx.strokeStyle = 'rgba(0,255,136,0.022)'; ctx.stroke();
-    }
+    for (let x = 0; x <= W; x += 80) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.strokeStyle = 'rgba(0,255,136,0.022)'; ctx.stroke(); }
+    for (let y = 0; y <= H; y += 80) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.strokeStyle = 'rgba(0,255,136,0.022)'; ctx.stroke(); }
   }
-
   function loop() {
-    ctx.clearRect(0, 0, W, H);
-    drawGrid();
+    ctx.clearRect(0, 0, W, H); drawGrid();
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y; const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < CONNECT) {
           const [r, g, b] = particles[i].color;
           ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
@@ -111,13 +90,9 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
         }
       }
     }
-    particles.forEach(p => { p.update(); p.draw(); });
-    requestAnimationFrame(loop);
+    particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(loop);
   }
-
-  resize();
-  particles = Array.from({ length: NUM }, () => new Particle());
-  loop();
+  resize(); particles = Array.from({ length: NUM }, () => new Particle()); loop();
   window.addEventListener('resize', () => { resize(); particles.forEach(p => p.reset(true)); });
   document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
   document.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
@@ -127,31 +102,20 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
 // WORLD MAP
 // ============================================================
 (function initWorldMap() {
-  const hero = document.getElementById('hero');
-  if (!hero) return;
-
-  if (getComputedStyle(hero).position === 'static') {
-    hero.style.position = 'relative';
-  }
-
+  const hero = document.getElementById('hero'); if (!hero) return;
+  if (getComputedStyle(hero).position === 'static') hero.style.position = 'relative';
   const canvas = document.createElement('canvas');
   canvas.style.cssText = `position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;`;
-  hero.appendChild(canvas);
-
-  const ctx = canvas.getContext('2d');
+  hero.appendChild(canvas); const ctx = canvas.getContext('2d');
   let W = 0, H = 0, t = 0;
-
   function resize() {
-    const rect = hero.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+    const rect = hero.getBoundingClientRect(); const dpr = window.devicePixelRatio || 1;
     W = rect.width; H = rect.height;
     canvas.width = W * dpr; canvas.height = H * dpr;
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-
   const ll = (lon, lat) => [(lon + 180) / 360 * W, (90 - lat) / 180 * H];
-
   const CONTINENTS = [
     [[-10,36],[0,36],[10,36],[20,35],[28,32],[34,30],[37,12],[40,5],[40,-5],[30,-18],[20,-35],[18,-34],[15,-22],[10,-5],[5,5],[0,5],[-5,5],[-15,15],[-17,20],[-10,36]],
     [[-60,50],[-75,43],[-82,30],[-90,28],[-95,25],[-88,16],[-78,9],[-83,12],[-90,18],[-100,20],[-108,24],[-117,33],[-120,47],[-130,54],[-138,58],[-140,62],[-152,62],[-155,59],[-163,55],[-168,63],[-170,64],[-140,70],[-80,72],[-65,68],[-60,50]],
@@ -160,20 +124,15 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
     [[115,-32],[120,-28],[130,-18],[136,-12],[140,-14],[148,-18],[154,-24],[155,-28],[152,-34],[148,-38],[144,-38],[138,-36],[130,-32],[125,-34],[115,-34],[115,-32]],
     [[68,23],[70,20],[72,22],[72,19],[74,17],[76,14],[78,9],[80,9],[80,8],[78,8],[80,12],[80,18],[78,20],[76,22],[74,24],[72,24],[70,24],[68,24],[67,22],[68,23]],
   ];
-
   const CITIES = { hyderabad: [78.47, 17.38], london: [-0.12, 51.51], newyork: [-74.0, 40.71], tokyo: [139.7, 35.68] };
   const DESTS = Object.entries(CITIES).filter(([k]) => k !== 'hyderabad');
   const arcs = DESTS.map(([name, pos], i) => ({ to: pos, from: CITIES.hyderabad, prog: 0, speed: 0.003 }));
-
   function bezier(ax, ay, bx, by, t) {
-    const mx = (ax + bx) / 2, my = (ay + by) / 2;
-    const dx = bx - ax, dy = by - ay;
-    const len = Math.hypot(dx, dy) || 1;
-    const lift = len * 0.3;
+    const mx = (ax + bx) / 2, my = (ay + by) / 2; const dx = bx - ax, dy = by - ay;
+    const len = Math.hypot(dx, dy) || 1; const lift = len * 0.3;
     const cx = mx - (dy / len) * lift, cy = my + (dx / len) * lift;
     return { x: (1-t)*(1-t)*ax + 2*(1-t)*t*cx + t*t*bx, y: (1-t)*(1-t)*ay + 2*(1-t)*t*cy + t*t*by };
   }
-
   function drawMap() {
     ctx.lineWidth = 1;
     CONTINENTS.forEach(pts => {
@@ -182,7 +141,6 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
       ctx.strokeStyle = 'rgba(0,255,136,0.08)'; ctx.stroke();
     });
   }
-
   function drawArcs() {
     const [hx, hy] = ll(...CITIES.hyderabad);
     arcs.forEach(arc => {
@@ -193,26 +151,20 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
     });
     ctx.beginPath(); ctx.arc(hx, hy, 4, 0, Math.PI * 2); ctx.fillStyle = '#FF9933'; ctx.fill();
   }
-
   function frame() { ctx.clearRect(0, 0, W, H); drawMap(); drawArcs(); requestAnimationFrame(frame); }
-  window.addEventListener('resize', resize);
-  resize(); frame();
+  window.addEventListener('resize', resize); resize(); frame();
 })();
 
 // ============================================================
-// UI INITIALIZATIONS (Scroll, Cursor, Nav, Boot, Hero, Stats, Reveal, Ticker, Easter Egg)
+// UI INITIALIZATIONS
 // ============================================================
 (function initScrollProgress() {
-  const bar = $('#scrollProgress');
-  if (!bar) return;
-  window.addEventListener('scroll', () => {
-    bar.style.width = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100, 100) + '%';
-  }, { passive: true });
+  const bar = $('#scrollProgress'); if (!bar) return;
+  window.addEventListener('scroll', () => { bar.style.width = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100, 100) + '%'; }, { passive: true });
 })();
 
 (function initCursor() {
-  const dot = $('#cursorDot'), ring = $('#cursorRing');
-  if (!dot || !ring) return;
+  const dot = $('#cursorDot'), ring = $('#cursorRing'); if (!dot || !ring) return;
   let mx = -100, my = -100, rx = -100, ry = -100;
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
   (function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); })();
@@ -223,8 +175,7 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
 })();
 
 (function initNav() {
-  const nav = $('#mainNav'), toggle = $('#navToggle'), links = $('#navLinks');
-  if (!nav) return;
+  const nav = $('#mainNav'), toggle = $('#navToggle'), links = $('#navLinks'); if (!nav) return;
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
   if (toggle && links) {
     on(toggle, 'click', () => {
@@ -244,13 +195,8 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
 })();
 
 (function initBootLoader() {
-  const loader = $('#bootLoader'), terminal = $('#bootTerminal'), bar = $('#bootBar');
-  if (!loader || !terminal || !bar) return;
-  const lines = [
-    '[ OK ] Initializing offensive security suite...', '[ OK ] Loading kernel modules...',
-    '[ OK ] Mounting /proc/nullspec7or...', '[ OK ] Routing via Hyderabad → World nodes...',
-    '[ OK ] Establishing encrypted channel...', '[ OK ] Bypassing perimeter defenses...', '[ OK ] All systems nominal. Welcome.',
-  ];
+  const loader = $('#bootLoader'), terminal = $('#bootTerminal'), bar = $('#bootBar'); if (!loader || !terminal || !bar) return;
+  const lines = ['[ OK ] Initializing offensive security suite...','[ OK ] Loading kernel modules...','[ OK ] Mounting /proc/nullspec7or...','[ OK ] Routing via Hyderabad → World nodes...','[ OK ] Establishing encrypted channel...','[ OK ] Bypassing perimeter defenses...','[ OK ] All systems nominal. Welcome.'];
   let i = 0;
   const next = () => {
     if (i >= lines.length) { setTimeout(() => loader.classList.add('hidden'), 400); return; }
@@ -302,8 +248,7 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
 })();
 
 window.initScrollReveal = function() {
-  const els = $$('.reveal-up,.reveal-left,.reveal-right,.reveal-card,.reveal-timeline');
-  if (!els.length) return;
+  const els = $$('.reveal-up,.reveal-left,.reveal-right,.reveal-card,.reveal-timeline'); if (!els.length) return;
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
@@ -368,11 +313,10 @@ window.initScrollReveal();
 })();
 
 // ============================================================
-// BLOG SYSTEM
+// BLOG SYSTEM (With Cover Image Injection)
 // ============================================================
 (function initBlog() {
   if (!document.body.classList.contains('blog-page')) return;
-
   let allPosts = [], activePost = null, activeTags = new Set();
   const blogList = $('#blogList'), blogArticle = $('#blogArticle'), emptyState = $('#blogEmptyState');
   const artHeader = $('#articleHeader'), artBody = $('#articleBody');
@@ -508,11 +452,26 @@ window.initScrollReveal();
     if (emptyState) emptyState.style.display = 'none';
     if (!blogArticle) return;
     blogArticle.style.display = 'block'; blogArticle.style.animation = 'none';
-    if (artHeader) artHeader.innerHTML = `
-      <span class="article-date">${fmtDate(post.date)}</span>
-      <h1>${esc(post.title)}</h1>
-      <div class="article-tags">${post.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>
-      <span class="article-readtime">⏱ ${post.readTime}</span>`;
+    
+    // Update Open Graph meta tags for social sharing
+    if (post.thumbnail) {
+      let ogImage = document.querySelector('meta[property="og:image"]');
+      let twitterImage = document.querySelector('meta[name="twitter:image"]');
+      if (!ogImage) { ogImage = document.createElement('meta'); ogImage.setAttribute('property', 'og:image'); document.head.appendChild(ogImage); }
+      if (!twitterImage) { twitterImage = document.createElement('meta'); twitterImage.setAttribute('name', 'twitter:image'); document.head.appendChild(twitterImage); }
+      const imgUrl = post.thumbnail.startsWith('http') ? post.thumbnail : window.location.origin + '/' + post.thumbnail.replace(/^\//, '');
+      ogImage.setAttribute('content', imgUrl); twitterImage.setAttribute('content', imgUrl);
+    }
+    
+    if (artHeader) {
+      let coverHtml = post.thumbnail ? `<img src="${esc(post.thumbnail)}" alt="${esc(post.title)}" class="blog-cover-image" />` : '';
+      artHeader.innerHTML = `
+        ${coverHtml}
+        <span class="article-date">${fmtDate(post.date)}</span>
+        <h1>${esc(post.title)}</h1>
+        <div class="article-tags">${post.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>
+        <span class="article-readtime">⏱ ${post.readTime}</span>`;
+    }
     if (artBody) {
       artBody.innerHTML = typeof marked !== 'undefined' ? marked.parse(post.content) : `<pre>${esc(post.content)}</pre>`;
       if (typeof hljs !== 'undefined') $$('pre code', artBody).forEach(b => hljs.highlightElement(b));
@@ -529,9 +488,7 @@ window.initScrollReveal();
 // ACHIEVEMENTS
 // ============================================================
 (function initAchievements() {
-  const carousel = $('#achievementsCarousel');
-  if (!carousel) return;
-
+  const carousel = $('#achievementsCarousel'); if (!carousel) return;
   const ICONS = {
     orange_star: `<svg width="40" height="40" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M17 12h.01M12 7h.01M7 12h.01"/><rect x="3" y="3" width="18" height="14" rx="2"/></svg>`,
     green_star: `<svg width="40" height="40" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
@@ -539,13 +496,11 @@ window.initScrollReveal();
     green_globe: `<svg width="40" height="40" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>`,
     orange_check: `<svg width="40" height="40" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
   };
-
   function pickIcon(icon, index) {
     const palette = ['orange', 'green']; const color = icon || palette[index % 2];
     const shapes = ['star', 'shield', 'globe', 'check', 'star']; const shape = shapes[index % shapes.length];
     const key = color + '_' + shape; return ICONS[key] || ICONS['orange_star'];
   }
-
   function parseAchievementsMD(raw) {
     const normalized = raw.replace(/\r\n/g, '\n');
     const stripped = normalized.replace(/^---\n[\s\S]*?\n---\n?/, '').trim();
@@ -564,7 +519,6 @@ window.initScrollReveal();
       return { title, year, badge, icon, description, index: i };
     });
   }
-
   function renderAchievements(achievements) {
     carousel.innerHTML = '';
     achievements.forEach((ach, i) => {
@@ -581,7 +535,6 @@ window.initScrollReveal();
     });
     reinitCarousel();
   }
-
   function reinitCarousel() {
     const prev = $('#achPrev'), next = $('#achNext'), dots = $('#achDots');
     if (!carousel || !dots) return;
@@ -603,7 +556,6 @@ window.initScrollReveal();
     on(carousel, 'touchend', e => { if (Math.abs(ts - e.changedTouches[0].clientX) > 50) go(cur + (ts > e.changedTouches[0].clientX ? 1 : -1)); });
     reset();
   }
-
   fetch('data/achievements.md')
     .then(r => { if (!r.ok) throw 0; return r.text(); })
     .then(text => { const achievements = parseAchievementsMD(text); if (achievements.length) renderAchievements(achievements); })
@@ -611,47 +563,9 @@ window.initScrollReveal();
 })();
 
 // ============================================================
-// DYNAMIC SECTIONS: ABOUT, EXPERIENCE, PROJECTS, CONTACT
+// DYNAMIC SECTIONS: EXPERIENCE, PROJECTS, CONTACT
 // ============================================================
 (function initDynamicSections() {
-    // 1. ABOUT
-    fetch('data/about.md').then(r => r.text()).then(raw => {
-        const blocks = parseBlocks(raw); if (!blocks.length) return;
-        const { meta, content } = blocks[0];
-        
-        const bioEl = document.getElementById('aboutBio');
-        if (bioEl) {
-            const bioMatch = content.match(/# Bio\s*([\s\S]*)/i);
-            bioEl.innerHTML = renderMD(bioMatch ? bioMatch[1].trim() : content);
-        }
-
-        const detailsEl = document.getElementById('aboutDetails');
-        if (detailsEl) {
-            detailsEl.innerHTML = `
-                <div class="detail-item"><span class="detail-key">Location</span><span class="detail-val">${esc(meta.location || '')}</span></div>
-                <div class="detail-item"><span class="detail-key">Focus</span><span class="detail-val">${esc(meta.focus || '')}</span></div>
-                <div class="detail-item"><span class="detail-key">Certification</span><span class="detail-val">${esc(meta.certification || '')}</span></div>`;
-        }
-
-        const skillsEl = document.getElementById('aboutSkills');
-        if (skillsEl) {
-            const skillsMatch = content.match(/# Skills\s*([\s\S]*?)(?=#|$)/i);
-            if (skillsMatch) {
-                skillsEl.innerHTML = skillsMatch[1].trim().split('\n').filter(l => l.includes(':')).map(line => {
-                    const [name, pct] = line.split(':').map(s => s.trim());
-                    return `<div class="skill-item"><div class="skill-header"><span class="skill-name">${esc(name)}</span><span class="skill-pct">${esc(pct)}%</span></div><div class="skill-bar"><div class="skill-fill" data-w="${esc(pct)}" style="width: 0%;"></div></div></div>`;
-                }).join('');
-            }
-        }
-
-        const tagsEl = document.getElementById('aboutTechTags');
-        if (tagsEl && meta.tech_tags) {
-            const tags = Array.isArray(meta.tech_tags) ? meta.tech_tags : meta.tech_tags.split(',').map(s => s.trim());
-            tagsEl.innerHTML = tags.map(t => `<span class="tag">${esc(t)}</span>`).join('');
-        }
-        window.initScrollReveal();
-    }).catch(() => console.warn('Could not load about.md'));
-
     // 2. EXPERIENCE (Compact for Index, Full for Archive)
     const expContainerIndex = document.getElementById('experienceTimelineIndex');
     const expContainerFull = document.getElementById('experienceTimelineFull');
@@ -662,7 +576,6 @@ window.initScrollReveal();
             const blocks = parseBlocks(raw);
             const isArchive = document.body.classList.contains('archive-page');
             
-            // Render for Index Page (Compact)
             if (expContainerIndex) {
                 expContainerIndex.innerHTML = '';
                 const limit = 3;
@@ -679,10 +592,7 @@ window.initScrollReveal();
                             <span class="exp-compact-date">${esc(m.date || '')} ${m.badge ? `<span class="tcard-badge">${esc(m.badge)}</span>` : ''}</span>
                         </div>
                         <div class="exp-compact-role">${esc(m.title || '')}</div>
-                        
-                        <!-- FULL DESCRIPTION INJECTED HERE (Visually truncated by CSS) -->
                         <div class="exp-compact-desc">${esc(m.description || '')}</div>
-                        
                         <div class="exp-compact-tools">
                             ${tools.slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}
                         </div>
@@ -694,9 +604,7 @@ window.initScrollReveal();
                 window.initScrollReveal();
             }
 
-            // Render for Full Archive Page (Detailed + Sticky Nav)
             if (expContainerFull) {
-                // 1. Build Sticky Nav
                 const navContainer = document.getElementById('expStickyNav');
                 if (navContainer) {
                     navContainer.innerHTML = blocks.map(b => {
@@ -707,7 +615,6 @@ window.initScrollReveal();
                     }).join('');
                 }
 
-                // 2. Build Detailed Cards
                 expContainerFull.innerHTML = '';
                 blocks.forEach(block => {
                     const m = block.meta;
@@ -732,7 +639,6 @@ window.initScrollReveal();
                     expContainerFull.appendChild(card);
                 });
                 
-                // 3. Sticky Nav Active State on Scroll
                 setTimeout(() => {
                     const navItems = document.querySelectorAll('.exp-nav-item');
                     const sections = document.querySelectorAll('.exp-full-card');
