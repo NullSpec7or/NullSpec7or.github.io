@@ -2,7 +2,7 @@
 title: "Trust Boundary Failures in Enterprise SSO"
 date: 2026-11-15
 tags: [#sso, #appsec, #owasp]
-thumbnail: "assets/car-link.png"
+thumbnail: "./assets/car-link.png"
 ---
 
 # Trust Boundary Failures in Enterprise SSO

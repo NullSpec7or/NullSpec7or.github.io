@@ -7,33 +7,31 @@
   <meta name="description" content="Offensive Security Engineer — Red Team, Exploit Development, Penetration Testing. Based in Hyderabad, India." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Updated Fonts: Added Noto Sans Devanagari for the divine text -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- Add this alongside your other Google Fonts links in the <head> -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet" />
-    <!-- Open Graph / Social Media Preview -->
+  
+  <!-- Open Graph / Social Media Preview -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://yourusername.github.io/blog.html" />
-  <meta property="og:title" content="Null Spec7or's Blog | Offensive Security Intel" />
+  <meta property="og:url" content="https://yourusername.github.io/" />
+  <meta property="og:title" content="Rupesh Kumar | Cybersecurity Engineer" />
   <meta property="og:description" content="Red team walkthroughs, CVE analysis, AD exploitation, OSCP prep, SIEM architecture" />
   <meta property="og:image" content="images/blog-og-cover.jpg" />
   <meta property="og:site_name" content="nullspec7or" />
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Null Spec7or's Blog" />
+  <meta name="twitter:title" content="Rupesh Kumar | Cybersecurity Engineer" />
   <meta name="twitter:description" content="Red team walkthroughs, CVE analysis, AD exploitation" />
   <meta name="twitter:image" content="images/blog-og-cover.jpg" />
 </head>
 <body>
-    <!-- ✨ Divine Invocation Top Banner ✨ -->
+  <!-- ✨ Divine Invocation Top Banner ✨ -->
   <div class="divine-top-banner">
     <span class="divine-text">ॐ श्री हरिः</span>
   </div>
 
-  <!-- Custom Cursor & Scroll Progress -->
-  <div class="cursor-dot" id="cursorDot"></div>
   <!-- Custom Cursor & Scroll Progress -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
@@ -54,7 +52,7 @@
     </div>
   </div>
 
-  <!-- NAV (Reordered) -->
+  <!-- NAV -->
   <nav class="nav" id="mainNav">
     <div class="nav-logo">
       <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
@@ -63,14 +61,14 @@
       </svg>
       <span>nullspec7or</span>
     </div>
-<ul class="nav-links" id="navLinks">
-  <li><a href="#about" data-text="ABOUT">ABOUT</a></li>
-  <li><a href="#achievements" data-text="ACHIEVEMENTS">ACHIEVEMENTS</a></li>
-  <li><a href="#experience" data-text="EXPERIENCE">EXPERIENCE</a></li> <!-- Changed -->
-  <li><a href="#projects" data-text="PROJECTS">PROJECTS</a></li>       <!-- Changed -->
-  <li><a href="#contact" data-text="CONTACT">CONTACT</a></li>
-  <li><a href="blog.html" data-text="BLOG" class="nav-blog">BLOG</a></li>
-</ul>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" data-text="ABOUT">ABOUT</a></li>
+      <li><a href="#achievements" data-text="ACHIEVEMENTS">ACHIEVEMENTS</a></li>
+      <li><a href="#experience" data-text="EXPERIENCE">EXPERIENCE</a></li>
+      <li><a href="#projects" data-text="PROJECTS">PROJECTS</a></li>
+      <li><a href="#contact" data-text="CONTACT">CONTACT</a></li>
+      <li><a href="blog.html" data-text="BLOG" class="nav-blog">BLOG</a></li>
+    </ul>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </nav>
 
@@ -103,26 +101,7 @@
     <div class="hero-scroll-hint"><span>SCROLL</span><div class="scroll-line"></div></div>
   </section>
 
-  <!-- 1. ABOUT (Fixed <p> nesting bug)
-  <section class="section about-section" id="about">
-    <div class="container">
-      <div class="section-label">01 / ABOUT</div>
-      <h2 class="section-title reveal-up">Who Am I</h2>
-      <div class="about-grid">
-        <div class="about-text reveal-left">
-          <div id="aboutBio"></div> <!-- Changed from <p> to <div> -->
-          <!-- <div class="about-details" id="aboutDetails"></div>
-        </div>
-        <div class="about-skills reveal-right">
-          <h3 class="skills-heading">Technical Arsenal</h3>
-          <div class="skills-list" id="aboutSkills"></div>
-          <div class="tech-tags" id="aboutTechTags"></div>
-        </div>
-      </div>
-    </div>
-  </section> --> 
-
-    <!-- 1. ABOUT -->
+  <!-- 1. ABOUT -->
   <section class="section about-section" id="about">
     <div class="container">
       <div class="section-label">01 / ABOUT</div>
@@ -146,7 +125,7 @@
             </div>
             <div class="detail-item">
               <span class="detail-key">Certification</span>
-              <span class="detail-val">OSCP (In Progress)</span>
+              <span class="detail-val">MCRTP , SC-900</span>
             </div>
           </div>
         </div>
@@ -195,11 +174,11 @@
     </div>
   </section>
 
-  <!-- 2. ACHIEVEMENTS (Moved up) -->
+  <!-- 2. ACHIEVEMENTS -->
   <section class="section achievements-section" id="achievements">
     <div class="container">
       <div class="section-label">02 / ACHIEVEMENTS</div>
-      <h2 class="section-title reveal-up">Flags Captured</h2>
+      <h2 class="section-title reveal-up">Bugs Captured</h2>
       <div class="achievements-carousel-wrap">
         <div class="achievements-carousel" id="achievementsCarousel"></div>
         <div class="carousel-controls">

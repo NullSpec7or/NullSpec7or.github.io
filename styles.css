@@ -776,3 +776,120 @@ body.blog-page { background:#060a0c; }
         margin-right: 8px;
     }
 }
+css
+
+/* ============================================================
+   NEW: CRT SCANLINE OVERLAY (Easter Egg Terminal & Boot Loader)
+   ============================================================ */
+.easter-egg::after,
+.boot-loader::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.07) 2px,
+    rgba(0, 0, 0, 0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+  border-radius: inherit;
+}
+
+/* ============================================================
+   NEW: tcard-badge (Experience card badge)
+   ============================================================ */
+.tcard-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 8px;
+  background: rgba(0,255,136,0.1);
+  border: 1px solid rgba(0,255,136,0.25);
+  border-radius: 3px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   NEW: 404 Page
+   ============================================================ */
+.not-found-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.not-found-code {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 15vw, 180px);
+  font-weight: 900;
+  color: var(--green);
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(0,255,136,0.3);
+  animation: glitch 4s steps(1) infinite;
+  margin-bottom: 16px;
+}
+.not-found-msg {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.not-found-sub {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted2);
+  margin-bottom: 40px;
+}
+.not-found-section .btn { margin: 0 8px; }
+
+/* ============================================================
+   NEW: Loading skeleton shimmer for Projects
+   ============================================================ */
+@keyframes shimmer {
+  0%  { background-position: 200% 0; }
+  100%{ background-position: -200% 0; }
+}
+
+/* ============================================================
+   NEW: Page Transition Overlay
+   ============================================================ */
+#pageTransitionOverlay {
+  position: fixed;
+  inset: 0;
+  background: #060a0c;
+  z-index: 999999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* ============================================================
+   NEW: Responsive Experience Archive Layout fix
+   ============================================================ */
+@media (max-width: 900px) {
+  .exp-archive-layout {
+    grid-template-columns: 1fr;
+  }
+  .exp-timeline-sidebar {
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid var(--border2);
+    max-height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 0;
+  }
+  .timeline-item::before,
+  .timeline-item::after { display: none; }
+  .timeline-item { padding: 6px 14px; border: 1px solid var(--border2); border-radius: 20px; }
+  .timeline-year { display: inline; margin-right: 6px; }
+  .exp-sticky-nav { top: 102px; }
+}
