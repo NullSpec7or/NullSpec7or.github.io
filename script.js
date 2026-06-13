@@ -35,11 +35,7 @@ function parseBlocks(raw) {
   if (!normalized.startsWith('---')) {
     return [{ meta: {}, content: normalized }];
   }
-  
-  // Remove the first '---\n'
   const withoutFirst = normalized.replace(/^---\r?\n/, '');
-  
-  // Split by '\n---\n' to alternate between frontmatter and content
   const parts = withoutFirst.split(/\n---\n/);
   const blocks = [];
   
@@ -47,7 +43,6 @@ function parseBlocks(raw) {
     const fmText = parts[i].trim();
     const content = parts[i + 1] ? parts[i + 1].trim() : '';
     const meta = {};
-    
     fmText.split(/\r?\n/).forEach(line => {
       const sep = line.indexOf(':');
       if (sep < 0) return;
@@ -356,7 +351,7 @@ window.initScrollReveal();
   }
 
 function parseFM(raw) {
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/); // Fixed regex
   if (!m) return { meta: {}, content: raw };
   const meta = {};
   m[1].split(/\r?\n/).forEach(line => {
@@ -590,15 +585,17 @@ function parseFM(raw) {
 // ============================================================
 // DYNAMIC SECTIONS: EXPERIENCE, PROJECTS, CONTACT
 // ============================================================
-(function initDynamicSections() {
-    // 2. EXPERIENCE (Compact for Index, Full for Archive)
-    const expContainerIndex = document.getElementById('experienceTimelineIndex');
-    const expContainerFull = document.getElementById('experienceTimelineFull');
-    const viewAllExp = document.getElementById('experienceViewAll');
-
     if (expContainerIndex || expContainerFull) {
         fetch('data/experience.md').then(r => r.text()).then(raw => {
-            const blocks = parseBlocks(raw);
+            let blocks = parseBlocks(raw);
+            
+            // --- NEW: Sort blocks by date, newest first ---
+            blocks.sort((a, b) => {
+                const dateA = new Date(a.meta.date || 0);
+                const dateB = new Date(b.meta.date || 0);
+                return dateB - dateA; // Newest at top, oldest at bottom
+            });
+            
             const isArchive = document.body.classList.contains('archive-page');
             
             if (expContainerIndex) {
@@ -630,6 +627,32 @@ function parseFM(raw) {
             }
 
             if (expContainerFull) {
+                // --- NEW: Populate Timeline Sidebar ---
+                const sidebar = document.getElementById('expTimelineSidebar');
+                if (sidebar) {
+                    sidebar.innerHTML = blocks.map(b => {
+                        const m = b.meta;
+                        const safeId = (m.id || m.company || 'exp').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+                        const dateObj = new Date(m.date || 0);
+                        const year = !isNaN(dateObj) ? dateObj.getFullYear() : '';
+                        const month = !isNaN(dateObj) ? dateObj.toLocaleString('default', { month: 'short' }) : '';
+                        return `
+                            <div class="timeline-item" data-target="${safeId}">
+                                <span class="timeline-year">${month} ${year}</span>
+                                <span class="timeline-company">${esc(m.company || 'Experience')}</span>
+                            </div>
+                        `;
+                    }).join('');
+
+                    sidebar.querySelectorAll('.timeline-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const target = document.getElementById(item.dataset.target);
+                            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        });
+                    });
+                }
+
+                // Trapezium Nav
                 const navContainer = document.getElementById('expStickyNav');
                 if (navContainer) {
                     navContainer.innerHTML = blocks.map(b => {
@@ -640,6 +663,7 @@ function parseFM(raw) {
                     }).join('');
                 }
 
+                // Render Cards
                 expContainerFull.innerHTML = '';
                 blocks.forEach(block => {
                     const m = block.meta;
@@ -664,17 +688,19 @@ function parseFM(raw) {
                     expContainerFull.appendChild(card);
                 });
                 
+                // --- UPDATED: Live Tracker for BOTH Sidebar and Trapezium Nav ---
                 setTimeout(() => {
                     const navItems = document.querySelectorAll('.exp-nav-item');
+                    const timelineItems = document.querySelectorAll('.timeline-item');
                     const sections = document.querySelectorAll('.exp-full-card');
-                    if (navItems.length && sections.length) {
+                    
+                    if (sections.length) {
                         const observer = new IntersectionObserver((entries) => {
                             entries.forEach(entry => {
                                 if (entry.isIntersecting) {
                                     const id = entry.target.id;
-                                    navItems.forEach(item => {
-                                        item.classList.toggle('active', item.dataset.target === id);
-                                    });
+                                    navItems.forEach(item => item.classList.toggle('active', item.dataset.target === id));
+                                    timelineItems.forEach(item => item.classList.toggle('active', item.dataset.target === id));
                                 }
                             });
                         }, { rootMargin: '-100px 0px -60% 0px', threshold: 0 });
@@ -684,68 +710,3 @@ function parseFM(raw) {
             }
         }).catch(() => {});
     }
-
-    // 3. PROJECTS (Paginated)
-    const projContainer = document.getElementById('projectsGrid');
-    const viewAllProj = document.getElementById('projectsViewAll');
-    if (projContainer) {
-        fetch('data/projects.md').then(r => r.text()).then(raw => {
-            const blocks = parseBlocks(raw);
-            const isArchive = document.body.classList.contains('archive-page');
-            const limit = isArchive ? blocks.length : 3;
-            const items = blocks.slice(0, limit);
-            
-            projContainer.innerHTML = '';
-            const iconSvg = `<svg width="24" height="24" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`;
-            
-            items.forEach(block => {
-                const m = block.meta;
-                const tags = Array.isArray(m.tags) ? m.tags : (m.tags ? m.tags.split(',').map(s=>s.trim()) : []);
-                const card = document.createElement('div');
-                card.className = 'project-card reveal-card';
-                card.innerHTML = `
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">${iconSvg}</div>
-                        <div class="project-links">
-                            ${m.github ? `<a href="${esc(m.github)}" class="project-link" target="_blank"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>` : ''}
-                            ${m.live ? `<a href="${esc(m.live)}" class="project-link" target="_blank"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>` : ''}
-                        </div>
-                    </div>
-                    <h3 class="project-title">${esc(m.title || '')}</h3>
-                    <p class="project-desc">${renderMD(m.description || '')}</p>
-                    <div class="project-tags">${tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>`;
-                projContainer.appendChild(card);
-            });
-            if (viewAllProj) viewAllProj.style.display = (!isArchive && blocks.length > limit) ? 'block' : 'none';
-            window.initScrollReveal();
-        }).catch(() => {});
-    }
-
-    // 4. CONTACT
-    fetch('data/contact.md').then(r => r.text()).then(raw => {
-        const blocks = parseBlocks(raw); if (!blocks.length) return;
-        const { meta } = blocks[0];
-        
-        const introEl = document.getElementById('contactIntro');
-        if (introEl && meta.intro) introEl.innerHTML = renderMD(meta.intro);
-        
-        const infoEl = document.getElementById('contactInfo');
-        if (infoEl) {
-            const items = [];
-            if (meta.email) items.push({ icon: 'email', label: 'Email', value: meta.email, href: `mailto:${meta.email}` });
-            if (meta.github) items.push({ icon: 'github', label: 'GitHub', value: meta.github, href: `https://${meta.github}` });
-            if (meta.linkedin) items.push({ icon: 'linkedin', label: 'LinkedIn', value: meta.linkedin, href: `https://${meta.linkedin}` });
-            
-            infoEl.innerHTML = items.map(item => `
-                <a href="${esc(item.href)}" class="contact-item" target="_blank">
-                    <div class="contact-icon">
-                        ${item.icon === 'email' ? '<svg width="18" height="18" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' : ''}
-                        ${item.icon === 'github' ? '<svg width="18" height="18" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>' : ''}
-                        ${item.icon === 'linkedin' ? '<svg width="18" height="18" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>' : ''}
-                    </div>
-                    <div><span class="contact-label">${esc(item.label)}</span><span class="contact-value">${esc(item.value)}</span></div>
-                </a>`).join('');
-        }
-    }).catch(() => {});
-})();
