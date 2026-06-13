@@ -12,11 +12,9 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-  <!-- Custom Cursor -->
+  <!-- Custom Cursor & Scroll Progress -->
   <div class="cursor-dot" id="cursorDot"></div>
   <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- Scroll Progress Bar -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
   <!-- Boot Loader -->
@@ -34,7 +32,7 @@
     </div>
   </div>
 
-  <!-- NAV -->
+  <!-- NAV (Reordered) -->
   <nav class="nav" id="mainNav">
     <div class="nav-logo">
       <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
@@ -45,69 +43,52 @@
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about" data-text="ABOUT">ABOUT</a></li>
+      <li><a href="#achievements" data-text="ACHIEVEMENTS">ACHIEVEMENTS</a></li>
       <li><a href="experience.html" data-text="EXPERIENCE">EXPERIENCE</a></li>
       <li><a href="projects.html" data-text="PROJECTS">PROJECTS</a></li>
-      <li><a href="#achievements" data-text="ACHIEVEMENTS">ACHIEVEMENTS</a></li>
       <li><a href="#contact" data-text="CONTACT">CONTACT</a></li>
       <li><a href="blog.html" data-text="BLOG" class="nav-blog">BLOG</a></li>
     </ul>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </nav>
 
   <!-- HERO -->
   <section class="hero" id="hero">
     <canvas id="heroCanvas"></canvas>
-    <div class="india-map-container">
-      <canvas id="indiaMapCanvas"></canvas>
-    </div>
+    <div class="india-map-container"><canvas id="indiaMapCanvas"></canvas></div>
     <div class="hero-content">
-      <div class="hero-tag">
-        <span class="blink-dot"></span>
-        <span>AVAILABLE FOR HIRE</span>
-      </div>
+      <div class="hero-tag"><span class="blink-dot"></span><span>AVAILABLE FOR HIRE</span></div>
       <h1 class="hero-name" id="heroName"></h1>
       <div class="hero-title-wrap">
         <span class="hero-prefix">nullspec7or@offensive_security:~$ </span>
         <span class="hero-typewriter" id="heroTypewriter"></span>
         <span class="cursor-blink">_</span>
       </div>
-      <p class="hero-sub">Red Teamer · OWASP Appsec Global EU 2026 Speaker · Exploit Developer · OSCP Candidate · CTF Player</p>
+      <p class="hero-sub">Red Teamer · OWASP Appsec Global EU 2026 Speaker · Exploit Developer · CTF Player</p>
       <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">
-          <span class="btn-text">View Projects</span>
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="blog.html" class="btn btn-ghost">
-          <span class="btn-text">Read Blog</span>
-        </a>
-        <a href="#contact" class="btn btn-ghost">
-          <span class="btn-text">Contact</span>
-        </a>
+        <a href="#projects" class="btn btn-primary"><span class="btn-text">View Projects</span><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="blog.html" class="btn btn-ghost"><span class="btn-text">Read Blog</span></a>
+        <a href="#contact" class="btn btn-ghost"><span class="btn-text">Contact</span></a>
       </div>
       <div class="hero-stats">
-        <div class="stat"><span class="stat-num" data-target="50">0</span><span class="stat-label">Machines Rooted</span></div>
+        <div class="stat"><span class="stat-num" data-target="30">0</span><span class="stat-label">Critical Vulns Found</span></div>
         <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num" data-target="15">0</span><span class="stat-label">CVEs Analyzed</span></div>
+        <div class="stat"><span class="stat-num" data-target="8">0</span><span class="stat-label">Global VDPs</span></div>
         <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num" data-target="3">0</span><span class="stat-label">Years Hacking</span></div>
+        <div class="stat"><span class="stat-num" data-target="3">0</span><span class="stat-label">Years in Security</span></div>
       </div>
     </div>
-    <div class="hero-scroll-hint">
-      <span>SCROLL</span>
-      <div class="scroll-line"></div>
-    </div>
+    <div class="hero-scroll-hint"><span>SCROLL</span><div class="scroll-line"></div></div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- 1. ABOUT (Fixed <p> nesting bug) -->
   <section class="section about-section" id="about">
     <div class="container">
       <div class="section-label">01 / ABOUT</div>
       <h2 class="section-title reveal-up">Who Am I</h2>
       <div class="about-grid">
         <div class="about-text reveal-left">
-          <p class="about-bio" id="aboutBio">Loading...</p>
+          <div id="aboutBio"></div> <!-- Changed from <p> to <div> -->
           <div class="about-details" id="aboutDetails"></div>
         </div>
         <div class="about-skills reveal-right">
@@ -119,139 +100,61 @@
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section class="section experience-section" id="experience">
+  <!-- 2. ACHIEVEMENTS (Moved up) -->
+  <section class="section achievements-section" id="achievements">
     <div class="container">
-      <div class="section-label">02 / EXPERIENCE</div>
-      <h2 class="section-title reveal-up">Battle-Tested</h2>
-      <div class="timeline" id="experienceTimeline">
-        <div class="timeline-line"></div>
-      </div>
-      <div class="view-all-wrap" id="experienceViewAll" style="display:none;">
-        <a href="experience.html" target="_blank" class="view-all-link">See full list of experience →</a>
+      <div class="section-label">02 / ACHIEVEMENTS</div>
+      <h2 class="section-title reveal-up">Flags Captured</h2>
+      <div class="achievements-carousel-wrap">
+        <div class="achievements-carousel" id="achievementsCarousel"></div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="achPrev" aria-label="Previous"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <div class="carousel-dots" id="achDots"></div>
+          <button class="carousel-btn" id="achNext" aria-label="Next"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- 3. EXPERIENCE (Compact Preview) -->
+  <section class="section experience-section" id="experience">
+    <div class="container">
+      <div class="section-label">03 / EXPERIENCE</div>
+      <h2 class="section-title reveal-up">Battle-Tested</h2>
+      <div class="exp-compact-list" id="experienceTimelineIndex">
+        <!-- Populated by JS -->
+      </div>
+      <div class="view-all-wrap" id="experienceViewAll" style="display:none;">
+        <a href="experience.html" class="view-all-link">Read about all job experiences in detail →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PROJECTS -->
   <section class="section projects-section" id="projects">
     <div class="container">
-      <div class="section-label">03 / PROJECTS</div>
+      <div class="section-label">04 / PROJECTS</div>
       <h2 class="section-title reveal-up">Arsenal</h2>
-      <div class="projects-grid" id="projectsGrid">
-      </div>
+      <div class="projects-grid" id="projectsGrid"></div>
       <div class="view-all-wrap" id="projectsViewAll" style="display:none;">
         <a href="projects.html" target="_blank" class="view-all-link">See full list of projects →</a>
       </div>
     </div>
   </section>
 
-  <!-- ACHIEVEMENTS -->
-  <section class="section achievements-section" id="achievements">
-    <div class="container">
-      <div class="section-label">04 / ACHIEVEMENTS</div>
-      <h2 class="section-title reveal-up">Flags Captured</h2>
-      <div class="achievements-carousel-wrap">
-        <div class="achievements-carousel" id="achievementsCarousel">
-        </div>
-        <div class="carousel-controls">
-          <button class="carousel-btn" id="achPrev" aria-label="Previous">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <div class="carousel-dots" id="achDots"></div>
-          <button class="carousel-btn" id="achNext" aria-label="Next">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BLOG PREVIEW -->
-  <section class="section blog-preview-section" id="blog-preview">
-    <div class="container">
-      <div class="section-label">05 / LATEST INTEL</div>
-      <div class="blog-preview-head">
-        <h2 class="section-title reveal-up">From The Terminal</h2>
-        <a href="blog.html" class="view-all-link">View All →</a>
-      </div>
-    </div>
-    <div class="blog-ticker-wrap">
-      <div class="blog-ticker" id="blogTicker">
-        <!-- Populated by JS from blog posts -->
-        <div class="ticker-card">
-          <div class="ticker-thumb" style="background: linear-gradient(135deg,#0d1117,#1a2a1a)">
-            <svg width="32" height="32" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
-          </div>
-          <div class="ticker-info">
-            <span class="ticker-tag">Active Directory</span>
-            <h4>Owning the Domain: Kerberoasting to DA</h4>
-            <span class="ticker-meta">8 min read · Jan 2025</span>
-          </div>
-        </div>
-        <div class="ticker-card">
-          <div class="ticker-thumb" style="background: linear-gradient(135deg,#1a0d0d,#2a1a0d)">
-            <svg width="32" height="32" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </div>
-          <div class="ticker-info">
-            <span class="ticker-tag">Web Security</span>
-            <h4>Manual SQL Injection: Beyond sqlmap</h4>
-            <span class="ticker-meta">6 min read · Dec 2024</span>
-          </div>
-        </div>
-        <div class="ticker-card">
-          <div class="ticker-thumb" style="background: linear-gradient(135deg,#0d1a1a,#0d2a1a)">
-            <svg width="32" height="32" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="ticker-info">
-            <span class="ticker-tag">SIEM</span>
-            <h4>Wazuh on AWS: Block-Based Archival Strategy</h4>
-            <span class="ticker-meta">10 min read · Nov 2024</span>
-          </div>
-        </div>
-        <div class="ticker-card">
-          <div class="ticker-thumb" style="background: linear-gradient(135deg,#1a1a0d,#0d1a2a)">
-            <svg width="32" height="32" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          </div>
-          <div class="ticker-info">
-            <span class="ticker-tag">CVE</span>
-            <h4>CVE-2024-51482: ZoneMinder Path Traversal Deep Dive</h4>
-            <span class="ticker-meta">12 min read · Oct 2024</span>
-          </div>
-        </div>
-        <div class="ticker-card">
-          <div class="ticker-thumb" style="background: linear-gradient(135deg,#0d0d1a,#1a0d1a)">
-            <svg width="32" height="32" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-          </div>
-          <div class="ticker-info">
-            <span class="ticker-tag">HTB</span>
-            <h4>HackTheBox CCTV: Full Walkthrough</h4>
-            <span class="ticker-meta">15 min read · Oct 2024</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
+  <!-- 5. CONTACT -->
   <section class="section contact-section" id="contact">
     <div class="container">
-      <div class="section-label">06 / CONTACT</div>
+      <div class="section-label">05 / CONTACT</div>
       <h2 class="section-title reveal-up">Initiate Contact</h2>
       <div class="contact-grid">
         <div class="contact-left reveal-left">
           <p class="contact-intro" id="contactIntro">Loading...</p>
-          <div class="contact-info" id="contactInfo">
-          </div>
+          <div class="contact-info" id="contactInfo"></div>
         </div>
         <div class="contact-right reveal-right">
           <div class="terminal-widget">
-            <div class="terminal-header">
-              <span class="t-dot red"></span>
-              <span class="t-dot yellow"></span>
-              <span class="t-dot green"></span>
-              <span class="t-title">contact.sh</span>
-            </div>
+            <div class="terminal-header"><span class="t-dot red"></span><span class="t-dot yellow"></span><span class="t-dot green"></span><span class="t-title">contact.sh</span></div>
             <div class="terminal-body" id="terminalWidget">
               <p><span class="t-prompt">$ </span><span class="t-cmd">./send_message.sh</span></p>
               <p class="t-output">Initializing secure channel...</p>
@@ -265,17 +168,29 @@
     </div>
   </section>
 
+  <!-- 6. BLOG PREVIEW -->
+  <section class="section blog-preview-section" id="blog-preview">
+    <div class="container">
+      <div class="section-label">06 / LATEST INTEL</div>
+      <div class="blog-preview-head">
+        <h2 class="section-title reveal-up">From The Terminal</h2>
+        <a href="blog.html" class="view-all-link">View All →</a>
+      </div>
+    </div>
+    <div class="blog-ticker-wrap">
+      <div class="blog-ticker" id="blogTicker">
+        <div class="ticker-card"><div class="ticker-thumb" style="background: linear-gradient(135deg,#0d1117,#1a2a1a)"><svg width="32" height="32" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="ticker-info"><span class="ticker-tag">Active Directory</span><h4>Owning the Domain: Kerberoasting to DA</h4><span class="ticker-meta">8 min read · Jan 2025</span></div></div>
+        <div class="ticker-card"><div class="ticker-thumb" style="background: linear-gradient(135deg,#1a0d0d,#2a1a0d)"><svg width="32" height="32" fill="none" stroke="#ff6b35" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="ticker-info"><span class="ticker-tag">Web Security</span><h4>Manual SQL Injection: Beyond sqlmap</h4><span class="ticker-meta">6 min read · Dec 2024</span></div></div>
+        <div class="ticker-card"><div class="ticker-thumb" style="background: linear-gradient(135deg,#0d1a1a,#0d2a1a)"><svg width="32" height="32" fill="none" stroke="#00ff88" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="ticker-info"><span class="ticker-tag">SIEM</span><h4>Wazuh on AWS: Block-Based Archival Strategy</h4><span class="ticker-meta">10 min read · Nov 2024</span></div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-top">
-        <div class="footer-logo">
-          <svg width="32" height="32" viewBox="0 0 60 60" fill="none">
-            <polygon points="30,2 58,18 58,42 30,58 2,42 2,18" stroke="#00ff88" stroke-width="1.5" fill="none"/>
-            <text x="30" y="35" text-anchor="middle" fill="#00ff88" font-family="Share Tech Mono" font-size="14">RK</text>
-          </svg>
-          <span>nullspec7or</span>
-        </div>
+        <div class="footer-logo"><svg width="32" height="32" viewBox="0 0 60 60" fill="none"><polygon points="30,2 58,18 58,42 30,58 2,42 2,18" stroke="#00ff88" stroke-width="1.5" fill="none"/><text x="30" y="35" text-anchor="middle" fill="#00ff88" font-family="Share Tech Mono" font-size="14">RK</text></svg><span>nullspec7or</span></div>
         <p class="footer-tagline">Breaking things. Learning everything.</p>
       </div>
       <div class="footer-bottom">
@@ -287,17 +202,11 @@
 
   <!-- Terminal Easter Egg -->
   <div class="easter-egg" id="easterEgg">
-    <div class="ee-header">
-      <span class="t-dot red"></span><span class="t-dot yellow"></span><span class="t-dot green"></span>
-      <span class="ee-title">terminal — nullspec7or</span>
-      <button class="ee-close" id="eeClose">×</button>
-    </div>
+    <div class="ee-header"><span class="t-dot red"></span><span class="t-dot yellow"></span><span class="t-dot green"></span><span class="ee-title">terminal — nullspec7or</span><button class="ee-close" id="eeClose">×</button></div>
     <div class="ee-body" id="eeBody">
       <div class="ee-history" id="eeHistory">
         <p><span style="color:#00ff88">nullspec7or@kali</span><span style="color:#fff">:</span><span style="color:#4d9eff">~</span><span style="color:#fff">$ </span><span>whoami</span></p>
         <p style="color:#00ff88">nullspec7or</p>
-        <p><span style="color:#00ff88">nullspec7or@kali</span><span style="color:#fff">:</span><span style="color:#4d9eff">~</span><span style="color:#fff">$ </span><span>cat /etc/skills</span></p>
-        <p style="color:#ccc">Red Team · Exploit Dev · AD Attacks · Web Security · OSCP (coming soon)</p>
         <p><span style="color:#00ff88">nullspec7or@kali</span><span style="color:#fff">:</span><span style="color:#4d9eff">~</span><span style="color:#fff">$ </span><span style="opacity:0.5">// Type 'help' for available commands</span></p>
       </div>
       <div class="ee-input-row">
@@ -306,9 +215,7 @@
       </div>
     </div>
   </div>
-  <button class="ee-trigger" id="eeTrigger" title="Open Terminal">
-    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-  </button>
+  <button class="ee-trigger" id="eeTrigger" title="Open Terminal"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></button>
 
   <script src="script.js"></script>
 </body>

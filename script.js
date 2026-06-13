@@ -38,11 +38,10 @@ function parseBlocks(raw) {
     });
 }
 
-// Helper to render markdown text if marked.js is loaded
 const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : esc(text).replace(/\n/g, '<br>');
 
 // ============================================================
-// GLOBAL BACKGROUND CANVAS — fixed, spans all sections
+// GLOBAL BACKGROUND CANVAS
 // ============================================================
 (function initGlobalCanvas() {
   const canvas = document.createElement('canvas');
@@ -125,7 +124,7 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
 })();
 
 // ============================================================
-// WORLD MAP + INDIA→WORLD CONNECTION ARCS (hero overlay)
+// WORLD MAP
 // ============================================================
 (function initWorldMap() {
   const hero = document.getElementById('hero');
@@ -201,7 +200,7 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
 })();
 
 // ============================================================
-// SCROLL PROGRESS
+// UI INITIALIZATIONS (Scroll, Cursor, Nav, Boot, Hero, Stats, Reveal, Ticker, Easter Egg)
 // ============================================================
 (function initScrollProgress() {
   const bar = $('#scrollProgress');
@@ -211,9 +210,6 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
   }, { passive: true });
 })();
 
-// ============================================================
-// CUSTOM CURSOR
-// ============================================================
 (function initCursor() {
   const dot = $('#cursorDot'), ring = $('#cursorRing');
   if (!dot || !ring) return;
@@ -226,9 +222,6 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
   document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
 })();
 
-// ============================================================
-// NAVIGATION
-// ============================================================
 (function initNav() {
   const nav = $('#mainNav'), toggle = $('#navToggle'), links = $('#navLinks');
   if (!nav) return;
@@ -250,9 +243,6 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
   }, { passive: true });
 })();
 
-// ============================================================
-// BOOT LOADER
-// ============================================================
 (function initBootLoader() {
   const loader = $('#bootLoader'), terminal = $('#bootTerminal'), bar = $('#bootBar');
   if (!loader || !terminal || !bar) return;
@@ -270,9 +260,6 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
   setTimeout(next, 350); setTimeout(() => loader.classList.add('hidden'), 5500);
 })();
 
-// ============================================================
-// HERO TEXT — Glitch name + Typewriter
-// ============================================================
 (function initHeroText() {
   const nameEl = $('#heroName');
   if (nameEl) {
@@ -300,9 +287,6 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
   }
 })();
 
-// ============================================================
-// STATS COUNTER
-// ============================================================
 (function initStats() {
   const nums = $$('[data-target]'); if (!nums.length) return;
   const obs = new IntersectionObserver(entries => {
@@ -317,9 +301,6 @@ const renderMD = (text) => typeof marked !== 'undefined' ? marked.parse(text) : 
   nums.forEach(el => obs.observe(el));
 })();
 
-// ============================================================
-// SCROLL REVEAL (Exposed to window so dynamic content can trigger it)
-// ============================================================
 window.initScrollReveal = function() {
   const els = $$('.reveal-up,.reveal-left,.reveal-right,.reveal-card,.reveal-timeline');
   if (!els.length) return;
@@ -333,11 +314,8 @@ window.initScrollReveal = function() {
   }, { threshold: 0.2 });
   fills.forEach(el => sObs.observe(el));
 };
-window.initScrollReveal(); // Run on initial load
+window.initScrollReveal();
 
-// ============================================================
-// BLOG TICKER
-// ============================================================
 (function initBlogTicker() {
   const ticker = $('#blogTicker'); if (!ticker) return;
   const kids = [...ticker.children];
@@ -345,9 +323,6 @@ window.initScrollReveal(); // Run on initial load
   kids.forEach(c => ticker.appendChild(c.cloneNode(true)));
 })();
 
-// ============================================================
-// TERMINAL EASTER EGG
-// ============================================================
 (function initEasterEgg() {
   const trigger = $('#eeTrigger'), ee = $('#easterEgg'), closeBtn = $('#eeClose'), input = $('#eeInput'), hist = $('#eeHistory');
   if (!trigger || !ee) return;
@@ -382,25 +357,18 @@ window.initScrollReveal(); // Run on initial load
   }
 })();
 
-// ============================================================
-// SMOOTH SCROLL
-// ============================================================
 (function() {
   $$('a[href^="#"]').forEach(a => on(a, 'click', e => {
     const t = $(a.getAttribute('href')); if (!t) return; e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' });
   }));
 })();
 
-// ============================================================
-// GLITCH HOVER ON TITLES
-// ============================================================
 (function() {
   $$('.section-title, .hero-name').forEach(el => on(el, 'mouseenter', () => { el.classList.add('glitch-active'); setTimeout(() => el.classList.remove('glitch-active'), 500); }));
 })();
 
 // ============================================================
-// BLOG SYSTEM — MD-driven, multi-tag filter, auto read-time
-// Posts are registered in data/posts.json
+// BLOG SYSTEM
 // ============================================================
 (function initBlog() {
   if (!document.body.classList.contains('blog-page')) return;
@@ -558,7 +526,7 @@ window.initScrollReveal(); // Run on initial load
 })();
 
 // ============================================================
-// ACHIEVEMENTS — loaded from data/achievements.md
+// ACHIEVEMENTS
 // ============================================================
 (function initAchievements() {
   const carousel = $('#achievementsCarousel');
@@ -681,42 +649,108 @@ window.initScrollReveal(); // Run on initial load
             const tags = Array.isArray(meta.tech_tags) ? meta.tech_tags : meta.tech_tags.split(',').map(s => s.trim());
             tagsEl.innerHTML = tags.map(t => `<span class="tag">${esc(t)}</span>`).join('');
         }
-        window.initScrollReveal(); // Re-trigger for skill bars
+        window.initScrollReveal();
     }).catch(() => console.warn('Could not load about.md'));
 
-    // 2. EXPERIENCE (Paginated)
-    const expContainer = document.getElementById('experienceTimeline');
+    // 2. EXPERIENCE (Compact for Index, Full for Archive)
+    const expContainerIndex = document.getElementById('experienceTimelineIndex');
+    const expContainerFull = document.getElementById('experienceTimelineFull');
     const viewAllExp = document.getElementById('experienceViewAll');
-    if (expContainer) {
+
+    if (expContainerIndex || expContainerFull) {
         fetch('data/experience.md').then(r => r.text()).then(raw => {
             const blocks = parseBlocks(raw);
             const isArchive = document.body.classList.contains('archive-page');
-            const limit = isArchive ? blocks.length : 3; // Show 3 on home, all on archive
-            const items = blocks.slice(0, limit);
             
-            const line = expContainer.querySelector('.timeline-line');
-            expContainer.innerHTML = ''; if (line) expContainer.appendChild(line);
-            
-            items.forEach((block, i) => {
-                const m = block.meta;
-                const side = m.side || (i % 2 === 0 ? 'left' : 'right');
-                const tags = Array.isArray(m.tags) ? m.tags : (m.tags ? m.tags.split(',').map(s=>s.trim()) : []);
-                const item = document.createElement('div');
-                item.className = 'timeline-item reveal-timeline'; item.dataset.side = side;
-                item.innerHTML = `
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card">
-                        <div class="tcard-header"><span class="tcard-date">${esc(m.date || '')}</span>${m.badge ? `<span class="tcard-badge">${esc(m.badge)}</span>` : ''}</div>
-                        <h3 class="tcard-title">${esc(m.title || '')}</h3>
-                        <div class="tcard-company">${esc(m.company || '')}</div>
-                        <p class="tcard-desc">${renderMD(m.description || '')}</p>
-                        <div class="tcard-tags">${tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>
-                    </div>`;
-                expContainer.appendChild(item);
-            });
-            // Show "View All" link only if on homepage AND there are more than 3 items
-            if (viewAllExp) viewAllExp.style.display = (!isArchive && blocks.length > limit) ? 'block' : 'none';
-            window.initScrollReveal();
+            // Render for Index Page (Compact)
+            if (expContainerIndex) {
+                expContainerIndex.innerHTML = '';
+                const limit = 3;
+                const items = blocks.slice(0, limit);
+                items.forEach(block => {
+                    const m = block.meta;
+                    const tools = m.tools ? m.tools.split(',').map(t => t.trim()) : (m.tags ? (Array.isArray(m.tags) ? m.tags : m.tags.split(',')) : []);
+                    const safeId = (m.id || m.company || 'exp').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+                    const card = document.createElement('div');
+                    card.className = 'exp-compact-card reveal-up';
+                    card.innerHTML = `
+                        <div class="exp-compact-header">
+                            <h3>${esc(m.company || '')}</h3>
+                            <span class="exp-compact-date">${esc(m.date || '')} ${m.badge ? `<span class="tcard-badge">${esc(m.badge)}</span>` : ''}</span>
+                        </div>
+                        <div class="exp-compact-role">${esc(m.title || '')}</div>
+                        
+                        <!-- FULL DESCRIPTION INJECTED HERE (Visually truncated by CSS) -->
+                        <div class="exp-compact-desc">${esc(m.description || '')}</div>
+                        
+                        <div class="exp-compact-tools">
+                            ${tools.slice(0, 4).map(t => `<span class="tag">${esc(t)}</span>`).join('')}
+                        </div>
+                        <a href="experience.html#${safeId}" class="exp-compact-link">Read full experience →</a>
+                    `;
+                    expContainerIndex.appendChild(card);
+                });
+                if (viewAllExp) viewAllExp.style.display = blocks.length > limit ? 'block' : 'none';
+                window.initScrollReveal();
+            }
+
+            // Render for Full Archive Page (Detailed + Sticky Nav)
+            if (expContainerFull) {
+                // 1. Build Sticky Nav
+                const navContainer = document.getElementById('expStickyNav');
+                if (navContainer) {
+                    navContainer.innerHTML = blocks.map(b => {
+                        const m = b.meta;
+                        const safeId = (m.id || m.company || 'exp').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+                        const shortName = m.company ? m.company.split('·')[0].trim() : 'Experience';
+                        return `<a href="#${safeId}" class="exp-nav-item" data-target="${safeId}">${esc(shortName)}</a>`;
+                    }).join('');
+                }
+
+                // 2. Build Detailed Cards
+                expContainerFull.innerHTML = '';
+                blocks.forEach(block => {
+                    const m = block.meta;
+                    const safeId = (m.id || m.company || 'exp').replace(/[^a-z0-9]/gi, '-').toLowerCase();
+                    const tools = m.tools ? m.tools.split(',').map(t => t.trim()) : (m.tags ? (Array.isArray(m.tags) ? m.tags : m.tags.split(',')) : []);
+                    const card = document.createElement('div');
+                    card.className = 'exp-full-card reveal-up';
+                    card.id = safeId;
+                    card.innerHTML = `
+                        <div class="exp-full-header">
+                            <span class="exp-full-date">${esc(m.date || '')}</span>
+                            ${m.badge ? `<span class="tcard-badge">${esc(m.badge)}</span>` : ''}
+                        </div>
+                        <h3 class="exp-full-title">${esc(m.title || '')}</h3>
+                        <div class="exp-full-company">${esc(m.company || '')}</div>
+                        <p class="exp-full-desc">${renderMD(m.description || '')}</p>
+                        <div class="exp-full-tools">
+                            <span class="tools-label">Tools & Skills:</span>
+                            ${tools.map(t => `<span class="tag">${esc(t)}</span>`).join('')}
+                        </div>
+                    `;
+                    expContainerFull.appendChild(card);
+                });
+                
+                // 3. Sticky Nav Active State on Scroll
+                setTimeout(() => {
+                    const navItems = document.querySelectorAll('.exp-nav-item');
+                    const sections = document.querySelectorAll('.exp-full-card');
+                    if (navItems.length && sections.length) {
+                        const observer = new IntersectionObserver((entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    const id = entry.target.id;
+                                    navItems.forEach(item => {
+                                        item.classList.toggle('active', item.dataset.target === id);
+                                    });
+                                }
+                            });
+                        }, { rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+                        sections.forEach(section => observer.observe(section));
+                    }
+                }, 100);
+            }
         }).catch(() => {});
     }
 
@@ -727,7 +761,7 @@ window.initScrollReveal(); // Run on initial load
         fetch('data/projects.md').then(r => r.text()).then(raw => {
             const blocks = parseBlocks(raw);
             const isArchive = document.body.classList.contains('archive-page');
-            const limit = isArchive ? blocks.length : 3; // Show 3 on home, all on archive
+            const limit = isArchive ? blocks.length : 3;
             const items = blocks.slice(0, limit);
             
             projContainer.innerHTML = '';
@@ -752,7 +786,6 @@ window.initScrollReveal(); // Run on initial load
                     <div class="project-tags">${tags.map(t => `<span>${esc(t)}</span>`).join('')}</div>`;
                 projContainer.appendChild(card);
             });
-            // Show "View All" link only if on homepage AND there are more than 3 items
             if (viewAllProj) viewAllProj.style.display = (!isArchive && blocks.length > limit) ? 'block' : 'none';
             window.initScrollReveal();
         }).catch(() => {});
