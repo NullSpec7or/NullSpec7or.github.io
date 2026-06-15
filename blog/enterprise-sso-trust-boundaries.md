@@ -2,7 +2,7 @@
 title: "I Found a Code Injection Bug in the Official NGINX Docker Image"
 date: 2026-05-16
 tags: [#nginx, #docker, #containers, #appsec, #bugbounty, #cicd]
-thumbnail: "./assets/nginx-injection.png"
+thumbnail: ""
 ---
 
 # I Found a Code Injection Bug in the Official NGINX Docker Image
