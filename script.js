@@ -504,7 +504,18 @@ function initTiltEffect() {
       // Allow custom URL slug via `url:` or `permalink:` in frontmatter
       const customSlug = (meta.url || meta.permalink || '').replace(/^\/|\/$/g, '').replace(/^posts\//, '') || null;
       const slug = customSlug || fileSlug;
-      return { path: p, slug, title: meta.title ? meta.title.replace(/^["']|["']$/g, '') : 'Untitled', date: meta.date || '', tags, thumbnail: meta.thumbnail || null, content, readTime: calcReadTime(content) };
+
+      // Fix thumbnail: strip markdown image syntax ![alt](url) if used, normalize ../assets/ → assets/
+      let thumb = (meta.thumbnail || '').trim();
+      const mdImgMatch = thumb.match(/!\[.*?\]\((.+?)\)/);
+      if (mdImgMatch) thumb = mdImgMatch[1].trim();
+      thumb = thumb.replace(/^\.\.\//, '');
+      const thumbnail = thumb || null;
+
+      // Fix inline image paths in body: ../assets/ → assets/ (blog/ context vs root page context)
+      const fixedContent = content.replace(/!\[([^\]]*)\]\(\.\.\/([^)]+)\)/g, '![$1]($2)');
+
+      return { path: p, slug, title: meta.title ? meta.title.replace(/^["']|["']$/g, '') : 'Untitled', date: meta.date || '', tags, thumbnail, content: fixedContent, readTime: calcReadTime(content) };
     });
     allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
     if (postCountEl) postCountEl.textContent = allPosts.length + ' post' + (allPosts.length !== 1 ? 's' : '');
