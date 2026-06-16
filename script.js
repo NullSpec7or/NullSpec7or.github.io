@@ -473,10 +473,13 @@ function initTiltEffect() {
       gfm: true,
       breaks: true,
       renderer: {
-        image(token) {
-          const src = (token.href || '').replace(/^\.\.\//, '');
-          const alt = token.text || '';
-          const caption = token.title || '';
+        // marked 9.1.6 calls image(href, title, text) as plain strings, NOT a token object
+        image(href, title, text) {
+          let src = (href || '');
+          src = src.replace(/^\.\.\//, '');
+          src = src.replace(/^assets\/assets\//, 'assets/');
+          const alt = text || '';
+          const caption = title || '';
           return '<figure class="article-figure">'
             + '<img src="' + src + '" alt="' + alt + '" loading="lazy"/>'
             + (caption ? '<figcaption>' + caption + '</figcaption>' : '')
