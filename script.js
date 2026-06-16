@@ -510,8 +510,15 @@ function initTiltEffect() {
     if (postCountEl) postCountEl.textContent = allPosts.length + ' post' + (allPosts.length !== 1 ? 's' : '');
     if (!allPosts.length) { if (blogList) blogList.innerHTML = '<p style="padding:24px;color:var(--muted);font-family:var(--font-mono);font-size:12px;text-align:center">No posts found.</p>'; return; }
     buildTags(); applyFilters();
-    // Only auto-open first post if no specific post is requested in the URL
-    if (allPosts.length && !new URLSearchParams(window.location.search).get('post')) showPost(allPosts[0]);
+    // Auto-open first post if no specific post is requested in the URL
+    if (allPosts.length && !new URLSearchParams(window.location.search).get('post')) {
+      showPost(allPosts[0]);
+      // On mobile (single-column layout), scroll content area into view automatically
+      const contentArea = document.getElementById('blogContentArea');
+      if (contentArea && window.innerWidth < 768) {
+        setTimeout(() => contentArea.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
+    }
   }
 
   function buildTags() {
@@ -578,11 +585,10 @@ function initTiltEffect() {
     return false;
   }
 
-  // Wrap loadPosts to check URL after posts are loaded
-  const _origLoadPosts = loadPosts;
+  // Load posts, then ensure a post is always visible on arrival
   async function loadPostsAndCheckURL() {
-    await _origLoadPosts();
-    // If URL has ?post=, open that post instead of the default first one
+    await loadPosts();
+    // If URL has ?post=slug, open that specific post (overrides the auto-first-post)
     openPostFromURL();
   }
   loadPostsAndCheckURL();
