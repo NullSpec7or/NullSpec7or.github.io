@@ -590,6 +590,30 @@ function initTiltEffect() {
     if (artBody) {
       artBody.innerHTML = typeof marked !== 'undefined' ? marked.parse(post.content) : `<pre>${esc(post.content)}</pre>`;
       if (typeof hljs !== 'undefined') $$('pre code', artBody).forEach(b => hljs.highlightElement(b));
+      // Inject copy button into every code block
+      $$('pre', artBody).forEach(pre => {
+        const btn = document.createElement('button');
+        btn.className = 'copy-code-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', () => {
+          const code = pre.querySelector('code');
+          navigator.clipboard.writeText(code ? code.innerText : pre.innerText).then(() => {
+            btn.textContent = '✓ copied';
+            btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
+          }).catch(() => {
+            // Fallback for browsers without clipboard API
+            const sel = window.getSelection(), range = document.createRange();
+            range.selectNodeContents(code || pre);
+            sel.removeAllRanges(); sel.addRange(range);
+            document.execCommand('copy');
+            sel.removeAllRanges();
+            btn.textContent = '✓ copied'; btn.classList.add('copied');
+            setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
+          });
+        });
+        pre.appendChild(btn);
+      });
     }
     requestAnimationFrame(() => { blogArticle.style.animation = 'fadeInUp 0.45s ease'; });
     if (blogArticle.parentElement) blogArticle.parentElement.scrollTop = 0;
