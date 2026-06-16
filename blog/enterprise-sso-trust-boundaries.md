@@ -78,7 +78,7 @@ Contents:
 uid=0(root) gid=0(root) groups=0(root)
 nginx-pwned
 ```
-![Screenshot of the successfull POC Run](assets/assets/enterprise-sso-trust-boundaries/docker-nginx-poc.png)
+![Screenshot of the successfull POC Run](assets/enterprise-sso-trust-boundaries/docker-nginx-poc.png)
 
 Root execution. File written to disk. Owned by root. The container was still initializing when this ran.
 
