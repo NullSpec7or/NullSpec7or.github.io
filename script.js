@@ -467,13 +467,13 @@ function initTiltEffect() {
   const postCountEl = $('#postCount');
 
   if (typeof marked !== 'undefined') {
-    // marked 9.x: use marked.use() with renderer object — image() receives a token object {href, title, text}
+    // marked 9.x: image() receives a token object {href, title, text} — not (href, title, alt)
+    // Only override image renderer; leave code blocks to marked default + hljs.highlightElement on line 604
     marked.use({
       gfm: true,
       breaks: true,
       renderer: {
         image(token) {
-          // Rewrite ../assets/ → assets/ (md files are in blog/ but rendered from root)
           const src = (token.href || '').replace(/^\.\.\//, '');
           const alt = token.text || '';
           const caption = token.title || '';
@@ -484,14 +484,6 @@ function initTiltEffect() {
         }
       }
     });
-    if (typeof hljs !== 'undefined') {
-      marked.use({ renderer: { code(token) {
-        const lang = token.lang || '';
-        const code = token.text || '';
-        const highlighted = lang && hljs.getLanguage(lang) ? hljs.highlight(code, { language: lang }).value : hljs.highlightAuto(code).value;
-        return '<pre><code class="hljs ' + lang + '">' + highlighted + '</code></pre>';
-      }}});
-    }
   }
 
   // FIXED: regex uses ([\s\S]*?) correctly
