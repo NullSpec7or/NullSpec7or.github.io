@@ -467,26 +467,11 @@ function initTiltEffect() {
   const postCountEl = $('#postCount');
 
   if (typeof marked !== 'undefined') {
-    // marked 9.x: image() receives a token object {href, title, text} — not (href, title, alt)
-    // Only override image renderer; leave code blocks to marked default + hljs.highlightElement on line 604
-    marked.use({
-      gfm: true,
-      breaks: true,
-      renderer: {
-        // marked 9.1.6 calls image(href, title, text) as plain strings, NOT a token object
-        image(href, title, text) {
-          let src = (href || '');
-          src = src.replace(/^\.\.\//, '');
-          src = src.replace(/^assets\/assets\//, 'assets/');
-          const alt = text || '';
-          const caption = title || '';
-          return '<figure class="article-figure">'
-            + '<img src="' + src + '" alt="' + alt + '" loading="lazy"/>'
-            + (caption ? '<figcaption>' + caption + '</figcaption>' : '')
-            + '</figure>';
-        }
-      }
-    });
+    // Images are handled via @image[alt](src) syntax before marked runs — no custom renderer needed
+    marked.setOptions({ gfm: true, breaks: true });
+    if (typeof hljs !== 'undefined') {
+      marked.setOptions({ highlight: (code, lang) => lang && hljs.getLanguage(lang) ? hljs.highlight(code, { language: lang }).value : hljs.highlightAuto(code).value });
+    }
   }
 
   // FIXED: regex uses ([\s\S]*?) correctly
@@ -529,7 +514,15 @@ function initTiltEffect() {
       const thumbnail = thumb || null;
 
       // Fix inline image paths in body: ../assets/ → assets/ (blog/ context vs root page context)
-      const fixedContent = content.replace(/!\[([^\]]*)\]\(\.\.\/([^)]+)\)/g, '![$1]($2)');
+      // Convert @image[alt](src) anywhere in body → HTML figure, bypassing marked's renderer entirely
+      const fixedContent = content.replace(
+        /@image\[([^\]]*)\]\(([^)]+)\)/g,
+        (_, alt, src) => {
+          src = src.replace(/^\.\.\//, '').replace(/^assets\/assets\//, 'assets/');
+          return '<figure class="article-figure"><img src="' + src + '" alt="' + alt + '" loading="lazy"/>'
+            + (alt ? '<figcaption>' + alt + '</figcaption>' : '') + '</figure>';
+        }
+      );
 
       return { path: p, slug, title: meta.title ? meta.title.replace(/^["']|["']$/g, '') : 'Untitled', date: meta.date || '', tags, thumbnail, content: fixedContent, readTime: calcReadTime(content) };
     });
