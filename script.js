@@ -467,19 +467,30 @@ function initTiltEffect() {
   const postCountEl = $('#postCount');
 
   if (typeof marked !== 'undefined') {
-    // Custom renderer: wrap images in <figure> so they always display with alt as caption
-    const renderer = new marked.Renderer();
-    renderer.image = function(href, title, alt) {
-      // marked 9.x passes an object token as first arg in some builds — normalise
-      if (href && typeof href === 'object') { alt = href.text; title = href.title; href = href.href; }
-      // Rewrite ../assets/ → assets/ in case any slipped through
-      const src = (href || '').replace(/^\.\.\//, '');
-      const caption = title || alt || '';
-      return `<figure class="article-figure"><img src="${src}" alt="${alt || ''}" loading="lazy"/>${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>`;
-    };
-    marked.setOptions({ gfm: true, breaks: true, renderer });
+    // marked 9.x: use marked.use() with renderer object — image() receives a token object {href, title, text}
+    marked.use({
+      gfm: true,
+      breaks: true,
+      renderer: {
+        image(token) {
+          // Rewrite ../assets/ → assets/ (md files are in blog/ but rendered from root)
+          const src = (token.href || '').replace(/^\.\.\//, '');
+          const alt = token.text || '';
+          const caption = token.title || '';
+          return '<figure class="article-figure">'
+            + '<img src="' + src + '" alt="' + alt + '" loading="lazy"/>'
+            + (caption ? '<figcaption>' + caption + '</figcaption>' : '')
+            + '</figure>';
+        }
+      }
+    });
     if (typeof hljs !== 'undefined') {
-      marked.setOptions({ highlight: (code, lang) => lang && hljs.getLanguage(lang) ? hljs.highlight(code, { language: lang }).value : hljs.highlightAuto(code).value });
+      marked.use({ renderer: { code(token) {
+        const lang = token.lang || '';
+        const code = token.text || '';
+        const highlighted = lang && hljs.getLanguage(lang) ? hljs.highlight(code, { language: lang }).value : hljs.highlightAuto(code).value;
+        return '<pre><code class="hljs ' + lang + '">' + highlighted + '</code></pre>';
+      }}});
     }
   }
 
