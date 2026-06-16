@@ -430,6 +430,9 @@ body.blog-page { background:#060a0c; }
 .article-header .article-tags { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:12px; }
 .article-header .article-tags span { font-family:var(--font-mono); font-size:11px; padding:4px 11px; border:1px solid rgba(0,255,136,0.2); border-radius:3px; color:var(--green); background:rgba(0,255,136,0.06); }
 .article-header .article-readtime { font-family:var(--font-mono); font-size:11px; color:var(--muted); }
+.article-meta-row { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.share-link-btn { display:inline-flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; color:var(--green); background:rgba(0,255,136,0.07); border:1px solid rgba(0,255,136,0.25); border-radius:3px; padding:4px 11px; cursor:pointer; transition:background 0.2s,border-color 0.2s; letter-spacing:0.04em; }
+.share-link-btn:hover { background:rgba(0,255,136,0.15); border-color:rgba(0,255,136,0.5); }
 .article-body { color:rgba(240,246,255,0.84); line-height:1.85; font-size:15px; }
 .article-body h1,.article-body h2,.article-body h3,.article-body h4 { font-family:var(--font-display); color:var(--white); margin:34px 0 14px; font-weight:700; }
 .article-body h1 { font-size:26px; }

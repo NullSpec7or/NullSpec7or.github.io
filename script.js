@@ -500,13 +500,18 @@ function initTiltEffect() {
     allPosts = res.filter(r => r.status === 'fulfilled').map(r => {
       const { p, text } = r.value, { meta, content } = parseFM(text);
       const tags = Array.isArray(meta.tags) ? meta.tags : (meta.tags ? [meta.tags] : []);
-      return { path: p, slug: p.replace('blog/', '').replace('.md', ''), title: meta.title ? meta.title.replace(/^["']|["']$/g, '') : 'Untitled', date: meta.date || '', tags, thumbnail: meta.thumbnail || null, content, readTime: calcReadTime(content) };
+      const fileSlug = p.replace('blog/', '').replace('.md', '');
+      // Allow custom URL slug via `url:` or `permalink:` in frontmatter
+      const customSlug = (meta.url || meta.permalink || '').replace(/^\/|\/$/g, '').replace(/^posts\//, '') || null;
+      const slug = customSlug || fileSlug;
+      return { path: p, slug, title: meta.title ? meta.title.replace(/^["']|["']$/g, '') : 'Untitled', date: meta.date || '', tags, thumbnail: meta.thumbnail || null, content, readTime: calcReadTime(content) };
     });
     allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
     if (postCountEl) postCountEl.textContent = allPosts.length + ' post' + (allPosts.length !== 1 ? 's' : '');
     if (!allPosts.length) { if (blogList) blogList.innerHTML = '<p style="padding:24px;color:var(--muted);font-family:var(--font-mono);font-size:12px;text-align:center">No posts found.</p>'; return; }
     buildTags(); applyFilters();
-    if (allPosts.length) showPost(allPosts[0]);
+    // Only auto-open first post if no specific post is requested in the URL
+    if (allPosts.length && !new URLSearchParams(window.location.search).get('post')) showPost(allPosts[0]);
   }
 
   function buildTags() {
@@ -538,14 +543,22 @@ function initTiltEffect() {
       on(item, 'click', () => showPost(post)); blogList.appendChild(item);
     });
   }
-  function showPost(post) {
+  function showPost(post, pushHistory = true) {
     activePost = post;
     $$('.blog-post-item').forEach(item => { const t = item.querySelector('.post-title'); item.classList.toggle('active', t && t.textContent === post.title); });
     if (emptyState) emptyState.style.display = 'none';
+    // Update URL so the post is shareable
+    if (pushHistory && history.pushState) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('post', post.slug);
+      history.pushState({ slug: post.slug }, post.title, url.toString());
+      document.title = post.title + ' | nullspec7or';
+    }
     if (!blogArticle) return;
     blogArticle.style.display = 'block'; blogArticle.style.animation = 'none';
     if (artHeader) {
-      artHeader.innerHTML = `${post.thumbnail ? `<img src="${esc(post.thumbnail)}" alt="${esc(post.title)}" class="blog-cover-image"/>` : ''}<span class="article-date">${fmtDate(post.date)}</span><h1>${esc(post.title)}</h1><div class="article-tags">${post.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><span class="article-readtime">⏱ ${post.readTime}</span>`;
+      const postURL = (() => { const u = new URL(window.location.href); u.searchParams.set('post', post.slug); return u.toString(); })();
+      artHeader.innerHTML = `${post.thumbnail ? `<img src="${esc(post.thumbnail)}" alt="${esc(post.title)}" class="blog-cover-image"/>` : ''}<span class="article-date">${fmtDate(post.date)}</span><h1>${esc(post.title)}</h1><div class="article-tags">${post.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div><div class="article-meta-row"><span class="article-readtime">⏱ ${post.readTime}</span><button class="share-link-btn" title="Copy link to this post" onclick="navigator.clipboard.writeText('${postURL.replace(/'/g, "\\'")}').then(()=>{this.textContent='✓ Copied!';setTimeout(()=>{this.innerHTML='<svg width=\\'13\\' height=\\'13\\' fill=\\'none\\' stroke=\\'currentColor\\' stroke-width=\\'1.5\\' viewBox=\\'0 0 24 24\\'><path d=\\'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71\\'/><path d=\\'M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71\\'/></svg> Copy link'},2000)},()=>{window.prompt('Copy this link:','${postURL.replace(/'/g, "\\'")}')})"><svg width='13' height='13' fill='none' stroke='currentColor' stroke-width='1.5' viewBox='0 0 24 24'><path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/><path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/></svg> Copy link</button></div>`;
     }
     if (artBody) {
       artBody.innerHTML = typeof marked !== 'undefined' ? marked.parse(post.content) : `<pre>${esc(post.content)}</pre>`;
@@ -555,7 +568,29 @@ function initTiltEffect() {
     if (blogArticle.parentElement) blogArticle.parentElement.scrollTop = 0;
   }
   if (searchInput) on(searchInput, 'input', applyFilters);
-  loadPosts();
+
+  // Open post from URL on page load, and handle browser back/forward
+  function openPostFromURL() {
+    const slug = new URLSearchParams(window.location.search).get('post');
+    if (!slug) return false;
+    const post = allPosts.find(p => p.slug === slug);
+    if (post) { showPost(post, false); return true; }
+    return false;
+  }
+
+  // Wrap loadPosts to check URL after posts are loaded
+  const _origLoadPosts = loadPosts;
+  async function loadPostsAndCheckURL() {
+    await _origLoadPosts();
+    // If URL has ?post=, open that post instead of the default first one
+    openPostFromURL();
+  }
+  loadPostsAndCheckURL();
+
+  // Handle browser back / forward
+  window.addEventListener('popstate', () => {
+    if (!openPostFromURL() && allPosts.length) showPost(allPosts[0], false);
+  });
 })();
 
 // ============================================================
