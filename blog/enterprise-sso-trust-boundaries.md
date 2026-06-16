@@ -78,7 +78,8 @@ Contents:
 uid=0(root) gid=0(root) groups=0(root)
 nginx-pwned
 ```
-![Screenshot of the successfull POC Run](../assets/docker-nginx-poc.png)
+![Screenshot of the successfull POC Run](assets/docker-nginx-poc.png)
+
 Root execution. File written to disk. Owned by root. The container was still initializing when this ran.
 
 Tested on `nginx:1.29.8` — which is what `nginx:latest` resolves to as of 2026-05-11. Both Debian and Alpine-slim variants of mainline and stable were affected since they all pull from the same entrypoint source.
