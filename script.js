@@ -590,26 +590,29 @@ function initTiltEffect() {
     if (artBody) {
       artBody.innerHTML = typeof marked !== 'undefined' ? marked.parse(post.content) : `<pre>${esc(post.content)}</pre>`;
       if (typeof hljs !== 'undefined') $$('pre code', artBody).forEach(b => hljs.highlightElement(b));
-      // Inject copy button into every code block
+      // Inject clipboard icon copy button into every code block
+      const ICON_COPY = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+      const ICON_CHECK = '<svg width="14" height="14" fill="none" stroke="#00ff88" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
       $$('pre', artBody).forEach(pre => {
         const btn = document.createElement('button');
         btn.className = 'copy-code-btn';
-        btn.textContent = 'copy';
+        btn.innerHTML = ICON_COPY;
+        btn.title = 'Copy code';
         btn.addEventListener('click', () => {
           const code = pre.querySelector('code');
-          navigator.clipboard.writeText(code ? code.innerText : pre.innerText).then(() => {
-            btn.textContent = '✓ copied';
+          const text = code ? code.innerText : pre.innerText;
+          navigator.clipboard.writeText(text).then(() => {
+            btn.innerHTML = ICON_CHECK;
             btn.classList.add('copied');
-            setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
+            setTimeout(() => { btn.innerHTML = ICON_COPY; btn.classList.remove('copied'); }, 2000);
           }).catch(() => {
-            // Fallback for browsers without clipboard API
             const sel = window.getSelection(), range = document.createRange();
             range.selectNodeContents(code || pre);
             sel.removeAllRanges(); sel.addRange(range);
             document.execCommand('copy');
             sel.removeAllRanges();
-            btn.textContent = '✓ copied'; btn.classList.add('copied');
-            setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
+            btn.innerHTML = ICON_CHECK; btn.classList.add('copied');
+            setTimeout(() => { btn.innerHTML = ICON_COPY; btn.classList.remove('copied'); }, 2000);
           });
         });
         pre.appendChild(btn);
