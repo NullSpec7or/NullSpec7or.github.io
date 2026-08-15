@@ -22,7 +22,7 @@ description: Recognized on United States Department of Energy, Vulnerability Dis
 
 ---
 
-## Global Vulnerability Disclosures
+## Global Vulnerability Disclosures across Militaries, Governemnts & Computer Emergency Response Teams (CERT-Teams like CERT-FR, etc) 
 year: 2022
 badge: VDP
 icon: green_globe
